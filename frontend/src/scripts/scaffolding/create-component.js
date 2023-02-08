@@ -56,7 +56,7 @@ inquirer
 
         export default ${componentName};`;
 
-        fs.writeFileSync(path.join(componentPath, `${componentName}${reactExtension}`), file.react(componentName, reactExtension));
+        fs.writeFileSync(path.join(componentPath, `${componentName}${reactExtension}`), file.react(componentName, reactExtension, stylesExtension));
 
         // Create the component CSS file
         fs.writeFileSync(path.join(componentPath, `${componentName}${stylesExtension}`), '');

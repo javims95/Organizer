@@ -1,17 +1,18 @@
-const react = (name, extension) => {
-    console.log(extension);
-	if (extension === '.jsx') {
-		return `import React from 'react'
+const react = (componentName, reactExtension, stylesExtension) => {
+	if (reactExtension === '.jsx') {
+		return `import React, { Component } from 'react';
+import` + ` './${componentName}${stylesExtension}';` + `
 
-export const ${name} = () => {
-    return (
-        <>
-            <div>Example content</div>
-        </>
-    )
-}
+export default class ${componentName} extends Component {
 
-export default ${name};`
+    render() {
+        return (
+            <div>
+                {/* Your code here */}
+            </div>
+        );
+    }
+}`
 	} else {
 		return `import React from 'react';
 
@@ -19,7 +20,7 @@ interface Props {
     title: string;
 }
 
-const ${name} = (props: Props) => {
+const ${componentName} = (props: Props) => {
     return (
         <div>
             <h1>{props.title}</h1>
@@ -27,7 +28,7 @@ const ${name} = (props: Props) => {
     );
 };
 
-export default ${name};`;
+export default ${componentName};`;
 	}
 }
 
