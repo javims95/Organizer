@@ -5,7 +5,12 @@ const Navbar = () => {
     const navbarLinks = [
         { name: 'Home', href: '/home' },
         { name: 'About', href: '/about' },
-        { name: 'Contact', href: '/contact' }
+        { name: 'Contact', href: '/contact' },
+        { name: 'Contact', href: '/contact' },
+        { name: 'Contact', href: '/contact' },
+        { name: 'Contact', href: '/contact' },
+        { name: 'Contact', href: '/contact' },
+        { name: 'Contact', href: '/contact' },   
     ];
 
     const [navOpen, setNavOpen] = useState(false);
@@ -21,9 +26,9 @@ const Navbar = () => {
     };
 
     return (
-        <nav>
+        <nav className='main-nav'>
             <div className="logo">
-                <img src="logo.svg" alt="Logo Image" />
+                <img src="/logo.png" alt="Logo Image" />
             </div>
             <div className="hamburger" onClick={toggleNav}>
                 <div className="line1"></div>
@@ -33,7 +38,12 @@ const Navbar = () => {
             <ul className="nav-links" ref={navLinks}>
                 {navbarLinks.map((link, item) => (
                     <li key={link.name} ref={el => (links.current[item - 1] = el)}>
-                        <a href={link.href}>{link.name}</a>
+                        <a href={link.href}>{link.name}
+                            <span class="border border-top"></span>
+                            <span class="border border-right"></span>
+                            <span class="border border-bottom"></span>
+                            <span class="border border-left"></span>
+                        </a>
                     </li>
                 ))}
             </ul>
