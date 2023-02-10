@@ -1,24 +1,20 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import './Navbar.css'
 
 const Navbar = () => {
     const navbarLinks = [
-        { name: 'Home', href: '/home' },
-        { name: 'About', href: '/about' },
-        { name: 'Contact', href: '/contact' },
-        { name: 'Contact', href: '/contact' },
-        { name: 'Contact', href: '/contact' },
-        { name: 'Contact', href: '/contact' },
-        { name: 'Contact', href: '/contact' },
-        { name: 'Contact', href: '/contact' },   
+        { name: 'Inicio', href: '/inicio' },
+        { name: 'Calendario', href: '/calendario' },
+        { name: 'Tareas', href: '/tareas' },
+        { name: 'Contact', href: '/contacto' },
+        { name: 'Registro', href: '/registro' },
+        { name: 'Mi cuenta', href: '/cuenta' },
     ];
 
-    const [navOpen, setNavOpen] = useState(false);
     const navLinks = useRef(null);
     const links = useRef([]);
 
     const toggleNav = () => {
-        setNavOpen(prevState => !prevState);
         links.current.forEach(link => {
             link.classList.toggle("fade");
         });
@@ -39,10 +35,10 @@ const Navbar = () => {
                 {navbarLinks.map((link, item) => (
                     <li key={link.name} ref={el => (links.current[item - 1] = el)}>
                         <a href={link.href}>{link.name}
-                            <span class="border border-top"></span>
-                            <span class="border border-right"></span>
-                            <span class="border border-bottom"></span>
-                            <span class="border border-left"></span>
+                            <span className="border border-top"></span>
+                            <span className="border border-right"></span>
+                            <span className="border border-bottom"></span>
+                            <span className="border border-left"></span>
                         </a>
                     </li>
                 ))}
