@@ -1,0 +1,75 @@
+.app {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .header h2 {
+    margin: 0;
+  }
+  
+  .header button {
+    background-color: #fff;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .menu {
+    width: 200px;
+    background-color: #eee;
+    height: calc(100% - 50px);
+    position: absolute;
+    top: 50px;
+    left: 0;
+    box-sizing: border-box;
+    padding: 20px;
+  }
+  
+  .menu-option {
+    padding: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .menu-option:hover {
+    background-color: #ddd;
+  }
+  
+  .menu-option.selected {
+    background-color: #ddd;
+    font-weight: bold;
+  }
+  
+  .has-submenu {
+    margin-top: 20px;
+  }
+  
+  .submenu-option {
+    padding-left: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .submenu-option:hover {
+    background-color: #ddd;
+  }
+  
+  .submenu-option.selected {
+    background-color: #ddd;
+    font-weight: bold;
+  }
+  
