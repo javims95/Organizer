@@ -1,8 +1,8 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import Home from "./pages/Home";
-import Calendar from './pages/Calendar'
-import Navbar from "./components/Navbar/Navbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar.jsx";
+import Home from './pages/Home.jsx'
+import Calendar from './pages/Calendar.jsx'
 
 export default function App() {
     return (

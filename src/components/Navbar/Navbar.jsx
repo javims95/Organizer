@@ -3,7 +3,7 @@ import './Navbar.css'
 
 const Navbar = () => {
     const navbarLinks = [
-        { name: 'Inicio', href: '/inicio' },
+        { name: 'Inicio', href: '/' },
         { name: 'Calendario', href: '/calendario' },
         { name: 'Tareas', href: '/tareas' },
         { name: 'Contact', href: '/contacto' },

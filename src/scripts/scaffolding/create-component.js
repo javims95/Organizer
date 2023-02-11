@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import cli from 'cli-color';
 
-import file from './content.mjs'
+import template from './component-parts.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,7 +26,7 @@ inquirer
             name: 'stylesExtension',
             message: 'Extensión del archivo de estilos',
             type: 'list',
-            choices: ['.css', '.scss', '.sass']
+            choices: ['.scss', '.css', '.sass']
         },
     ])
     .then(function (answer) {
@@ -38,25 +38,8 @@ inquirer
         // Create the component directory
         fs.mkdirSync(componentPath);
 
-        // Create the component JSX file
-        const componentFile = `import React from 'react';
-
-        interface Props {
-        title: string;
-        }
-
-        const ${componentName} = (props: Props) => {
-            return (
-                <div>
-                    <h1>{props.title}</h1>
-                    <p>{props.description}</p>
-                </div>
-            );
-        };
-
-        export default ${componentName};`;
-
-        fs.writeFileSync(path.join(componentPath, `${componentName}${reactExtension}`), file.react(componentName, reactExtension, stylesExtension));
+        // Create the component JSX/TSX file
+        fs.writeFileSync(path.join(componentPath, `${componentName}${reactExtension}`), template.react(componentName, reactExtension, stylesExtension));
 
         // Create the component CSS file
         fs.writeFileSync(path.join(componentPath, `${componentName}${stylesExtension}`), '');
@@ -66,8 +49,3 @@ inquirer
         console.log(cli.green(`+ Created ${componentName}${stylesExtension} component`));
 
     });
-
-
-
-
-
