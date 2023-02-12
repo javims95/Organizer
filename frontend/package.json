@@ -17,6 +17,7 @@
         "babel-loader": "^8.2.2",
         "cli-color": "^2.0.3",
         "css-loader": "^6.7.3",
+        "dom-parser-react": "^0.3.0",
         "fs": "^0.0.1-security",
         "inquirer": "^9.1.4",
         "node-sass": "^8.0.0",

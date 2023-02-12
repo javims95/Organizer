@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700&display=swap");
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font: 16px/1.5 "Lato", sans-serif;
 }
 
 ul {
@@ -30,7 +33,7 @@ a {
         min-height: 100%;
     }
 
-    .admin-menu {
+    .main-menu {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
@@ -40,6 +43,29 @@ a {
             display: flex;
             align-items: center;
             font-size: 0.9rem;
+
+            &:hover {
+                background: #1d2636;
+                color: #00b9eb;
+                outline: none;
+
+                svg {
+                    fill: #00b9eb;
+                }
+
+                .nav-link {
+                    color: #00b9eb;
+                }
+            }
+
+            .nav-link {
+                color: #fff;
+            }
+
+            svg {
+                margin-right: 10px;                
+                fill: white;
+            }
         }
 
         li>* {
