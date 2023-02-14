@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.scss';
 import Icon from '../icon/icon.jsx';
 import menuItems from './conf/menuItems';
-
-
+import Search from '../Search/Search.jsx'
 
 const Navbar = () => {
     const [open, setOpen] = useState({});
@@ -42,13 +41,13 @@ const Navbar = () => {
 
     return (
         <div className="page-header">
-            <nav>
+            <nav className='main-menu'>
                 <a href=""></a>
                 <button></button>
-                <ul className="main-menu">
-                    <li className="menu-heading">
-                        <h3>Admin</h3>
-                    </li>
+                <div className="nav-heading">
+                        <Search />
+                </div>
+                <ul>
                     {menuItems.map((menuItem) => (
                         <li className={menuItem.subItems ? 'has-dropdown' : ''} key={menuItem.name}>
                             {menuItem.subItems ? (

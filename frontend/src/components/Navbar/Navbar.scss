@@ -1,3 +1,4 @@
+@import '../../styles/variables';
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700&display=swap");
 
 * {
@@ -24,8 +25,7 @@ a {
     overflow: auto;
     padding-top: 20px;
     width: 220px;
-    color: #dde9f8;
-    background: #242e42;
+    background: $nav-bg;
 
     nav {
         display: flex;
@@ -39,20 +39,26 @@ a {
         flex-grow: 1;
         margin-top: 35px;
 
+        .nav-heading {
+            padding: 12px 15px;            
+        }
+
         li.has-dropdown {
             .subitem-dropdown {
                 padding: 0px 15px;
                 max-height: 0;
-                opacity: 0;
-                transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+                visibility: hidden;
+                transition: max-height 0.5s ease-out, visibility 0.5s ease-out;
                 overflow: hidden;
             }
 
             .subitem-dropdown.open {
-                max-height: 1000px;
-                opacity: 1;
+                max-height: 250px;
+                visibility: visible;
+                transition: max-height .5s ease-out, visibility .5s ease-out;
             }
         }
+
 
         a {
             display: flex;
@@ -60,28 +66,27 @@ a {
             font-size: 0.9rem;
             padding: 12px 15px;
 
-            &:hover {
-                background: #1d2636;
-                color: #00b9eb;
-                outline: none;
-
-                svg {
-                    fill: #00b9eb;
-                }
-
-                .nav-link {
-                    color: #00b9eb;
-                }
-            }
-
             .nav-link {
-                color: #fff;
+                color: $nav-text-link;
             }
 
             svg {
                 margin-right: 10px;
-                fill: white;
+                fill: $nav-text-link;
             }
+
+            &:hover {
+                background-color:$nav-link-bg-hover;
+
+                svg {
+                    fill: $white;
+                }
+
+                .nav-link {
+                    color: $white;
+                }
+            }
+
 
             .dropdown {
                 position: absolute;

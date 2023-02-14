@@ -3,6 +3,10 @@ import React, { useState, useEffect } from 'react';
 const Icon = ({ icon, width, height, className }) => {
     const [svg, setSvg] = useState(null);
     const [viewBox, setViewBox] = useState(null);
+    const optionalProps = { className, width, height, };
+    const props = Object.fromEntries(
+        Object.entries(optionalProps).filter(([_, value]) => value != null)
+    );
 
     useEffect(() => {
         fetch('icons.svg')
@@ -19,11 +23,7 @@ const Icon = ({ icon, width, height, className }) => {
     }, [icon, width, height, className]);
 
     return svg ? (
-        <svg
-            className={className ? className : ''}
-            viewBox={viewBox}
-            width={width}
-            height={height}>
+        <svg viewBox={viewBox} {...props}>
             <path d={svg} />
         </svg>
     ) : null;

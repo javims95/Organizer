@@ -1,0 +1,56 @@
+@import '../../styles/variables';
+
+* {
+    box-sizing: border-box;
+}
+
+input:focus-visible {
+    outline: none;
+}
+
+.border {
+    border: 1px solid $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.25rem;
+
+    input[type=text] {
+        padding: 5px 5px 5px 12px;
+        font-size: 17px;
+        border: none;
+        float: left;
+        width: 80%;
+        background: transparent;
+        caret-color: $white;
+        &::placeholder {
+            color: $nav-text-link;
+        }
+    }
+
+    button {
+        float: left;
+        width: 20%;
+        padding: 8px;
+        background: transparent;
+        color: $nav-text-link;
+        font-size: 17px;
+        border: none;
+        border-left: 1px solid $nav-text-link;
+        cursor: pointer;
+        text-align: center;
+        &:hover {
+            background: $white;
+            .svg-search {
+                fill: $blue-light;
+            }
+        }
+    }
+
+    .svg-search {
+        fill: $nav-text-link;
+        display: block;
+        margin: 0 auto;
+        width: 20px;
+    }
+}
