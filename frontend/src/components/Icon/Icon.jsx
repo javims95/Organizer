@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Icon = ({ icon, width, height }) => {
+const Icon = ({ icon, width, height, className }) => {
     const [svg, setSvg] = useState(null);
     const [viewBox, setViewBox] = useState(null);
 
@@ -16,15 +16,17 @@ const Icon = ({ icon, width, height }) => {
                     setViewBox(match[1]);
                 }
             });
-    }, []);
+    }, [icon, width, height, className]);
 
     return svg ? (
-        <svg viewBox={viewBox} width={width} height={height}>
+        <svg
+            className={className ? className : ''}
+            viewBox={viewBox}
+            width={width}
+            height={height}>
             <path d={svg} />
         </svg>
     ) : null;
-
-
 };
 
 export default Icon;

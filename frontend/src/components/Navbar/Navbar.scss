@@ -63,8 +63,18 @@ a {
             }
 
             svg {
-                margin-right: 10px;                
+                margin-right: 10px;
                 fill: white;
+            }
+
+            .dropdown {
+                position: absolute;
+                right: 10px;
+                transition: transform .3s ease-in-out;
+            }
+
+            .down {
+                transform: rotate(-90deg);
             }
         }
 
@@ -72,5 +82,23 @@ a {
             width: 100%;
             padding: 12px 15px;
         }
+
+        .subitem-dropdown {
+            display: none;
+            transition: display 0.5s ease-out;
+        }
+
+        .open {
+            display: block;
+            transition: display 0.5s ease-in;
+        }
+
+        .close {
+            display: none;
+            transition: display 0.5s ease-in;
+        }
+
+
+
     }
 }
