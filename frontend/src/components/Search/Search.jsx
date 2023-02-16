@@ -22,8 +22,30 @@ const Menu = () => {
         return false;
     });
 
+    const highlightSearchTerm = (name, searchTerm) => {
+        const lowerCaseName = name.toLowerCase();
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+        const startIndex = lowerCaseName.indexOf(lowerCaseSearchTerm);
+        if (startIndex === -1) {
+            return name;
+        }
+
+        const endIndex = startIndex + lowerCaseSearchTerm.length;
+
+        return (
+            <>
+                {name.slice(0, startIndex)}
+                <span style={{ color: 'white' }}>
+                    {name.slice(startIndex, endIndex)}
+                </span>
+                {name.slice(endIndex)}
+            </>
+        );
+    };
+
     return (
-        <>
+        <div className='search'>
             <div className='border'>
                 <input
                     type="text"
@@ -31,32 +53,31 @@ const Menu = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button type="submit"> <Icon icon={'magnifying-glass'} className={'svg-search'} /></button>
+                <button type="submit"> <Icon icon={'magnifying-glass'} className={'search-icon'} /></button>
             </div>
 
             {searchTerm && (
                 <ul>
-                    {filteredItems.map((item) => (
-                        <li key={item.name}>
-                            <a href={item.link}>
-                                <i className={`fa fa-${item.icon}`} /> {item.name}
-                            </a>
-                            {item.subItems && (
-                                <ul>
-                                    {item.subItems.map((subItem) => (
-                                        <li key={subItem.name}>
-                                            <a href={subItem.link}>
-                                                <i className={`fa fa-${subItem.icon}`} /> {subItem.name}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </li>
+                    {filteredItems.map((item, i) => (
+                        // Eliminar todas las etiquetal del bucle, dejar solo los <a> y cambiar estilos
+                        <div key={item.name}>
+                            <li className="list-group-results" key={i}>
+                                <a className="nav-results" href={item.link}>
+                                    {highlightSearchTerm(item.name, searchTerm)}
+                                </a>
+                            </li>
+                            {item.subItems && item.subItems.map((subItem, j) => (
+                                <li className='list-group-results' key={j}>
+                                    <a className="nav-results" href={subItem.link}>
+                                        {subItem.name}
+                                    </a>
+                                </li>
+                            ))}
+                        </div>
                     ))}
                 </ul>
             )}
-        </>
+        </div>
     );
 };
 

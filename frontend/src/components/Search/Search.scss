@@ -8,49 +8,73 @@ input:focus-visible {
     outline: none;
 }
 
-.border {
-    border: 1px solid $white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.25rem;
+.search {
+    padding: 12px 15px;
 
-    input[type=text] {
-        padding: 5px 5px 5px 12px;
-        font-size: 17px;
-        border: none;
-        float: left;
-        width: 80%;
-        background: transparent;
-        caret-color: $white;
-        &::placeholder {
-            color: $nav-text-link;
-        }
-    }
 
-    button {
-        float: left;
-        width: 20%;
-        padding: 8px;
-        background: transparent;
-        color: $nav-text-link;
-        font-size: 17px;
-        border: none;
-        border-left: 1px solid $nav-text-link;
-        cursor: pointer;
-        text-align: center;
-        &:hover {
-            background: $white;
-            .svg-search {
-                fill: $blue-light;
+    .border {
+        border: 1px solid $white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.25rem;
+
+        input[type=text] {
+            padding: 5px 5px 5px 12px;
+            font-size: 17px;
+            border: none;
+            float: left;
+            width: 80%;
+            background: transparent;
+            caret-color: $white;
+            color: $white;
+
+            &::placeholder {
+                color: $nav-text-link;
             }
         }
+
+        button {
+            float: left;
+            width: 20%;
+            padding: 8px;
+            background: transparent;
+            color: $nav-text-link;
+            font-size: 17px;
+            border: none;
+            border-left: 1px solid $nav-text-link;
+            cursor: pointer;
+            text-align: center;
+
+            &:hover {
+                background: $white;
+
+                .search-icon {
+                    fill: $blue-light;
+                }
+            }
+        }
+
+        .search-icon {
+            fill: $nav-text-link;
+            display: block;
+            margin: 0 auto;
+            width: 20px;
+        }
     }
 
-    .svg-search {
-        fill: $nav-text-link;
-        display: block;
-        margin: 0 auto;
-        width: 20px;
+    .list-group-results {
+        border: 1px solid $search-border-results;
+        border-top-width: 0;
+
+        .nav-results {
+            background: $search-bg-results;
+            color: $nav-text-link;
+            font: 16px/1.5 "Lato", sans-serif;
+
+            &:hover {
+                background: $search-bg-results-hover;
+            }
+        }
     }
 }
