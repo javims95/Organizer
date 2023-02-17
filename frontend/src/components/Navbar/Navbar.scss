@@ -54,7 +54,15 @@ body {
                     display: flex;
                     align-items: center;
                     padding: 12px 15px;
-                    transition: all .2s ease;
+
+                    * {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        -webkit-transition: all .5s ease;
+                        -moz-transition: all .5s ease;
+                        -o-transition: all .5s ease;
+                        transition: all .5s ease;
+                    }
 
                     .nav-link {
                         color: $nav-text-link;
@@ -81,7 +89,6 @@ body {
                     .dropdown {
                         position: absolute;
                         right: 10px;
-                        transition: transform .3s ease-in-out;
                     }
 
                     .down {
@@ -96,14 +103,6 @@ body {
     &.nav-expanded {
         .page-header {
             width: 230px;
-
-            .primary-nav {
-                a {
-                    .nav-link {
-
-                    }
-                }
-            }
         }
 
         .navbar-secondary {
@@ -127,7 +126,6 @@ body {
             }
 
             .primary-nav {
-
                 .nav-link,
                 .dropdown {
                     display: none;
@@ -135,9 +133,6 @@ body {
 
                 a {
                     justify-content: center;
-                    .nav-link {
-                        
-                    }
                 }
             }
         }
@@ -154,6 +149,7 @@ body {
         }
     }
 
+    // Secondary navbar
     .navbar-secondary {
         display: flex;
         align-items: center;
