@@ -7,12 +7,10 @@ const Menu = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const filteredItems = menuItems.filter((item) => {
-        // Buscar en el item principal
         if (item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
             return true;
         }
 
-        // Buscar en los subitems
         if (item.subItems) {
             return item.subItems.some((subItem) =>
                 subItem.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -40,9 +38,14 @@ const Menu = () => {
                     {name.slice(startIndex, endIndex)}
                 </span>
                 {name.slice(endIndex)}
+
             </>
         );
     };
+
+    const handleClearSearch = () => {
+        setSearchTerm('');
+    }
 
     return (
         <div className='search'>
@@ -53,30 +56,43 @@ const Menu = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button type="submit"> <Icon icon={'magnifying-glass'} className={'search-icon'} /></button>
+                {searchTerm ? (
+                    <button type="button" onClick={handleClearSearch}>
+                        <Icon icon={'xmark'} className={'close-icon'} />
+                    </button>
+                ) : (
+                    <button type="submit">
+                        <Icon icon={'magnifying-glass'} className={'search-icon'} />
+                    </button>
+                )}
             </div>
 
             {searchTerm && (
-                <ul>
-                    {filteredItems.map((item, i) => (
-                        // Eliminar todas las etiquetal del bucle, dejar solo los <a> y cambiar estilos
-                        <div key={item.name}>
-                            <li className="list-group-results" key={i}>
-                                <a className="nav-results" href={item.link}>
-                                    {highlightSearchTerm(item.name, searchTerm)}
+                <div className='list-group'>
+                    {filteredItems.map((item) => {
+                        const highlightedItemName = highlightSearchTerm(item.name, searchTerm);
+                        return (
+                            <React.Fragment key={item.name}>
+                                <a className="list-group-item" href={item.link}>
+                                    {highlightedItemName}
                                 </a>
-                            </li>
-                            {item.subItems && item.subItems.map((subItem, j) => (
-                                <li className='list-group-results' key={j}>
-                                    <a className="nav-results" href={subItem.link}>
-                                        {subItem.name}
-                                    </a>
-                                </li>
-                            ))}
-                        </div>
-                    ))}
-                </ul>
+                                {item.subItems && item.subItems.map((subItem) => {
+                                    const highlightedSubItemName = highlightSearchTerm(subItem.name, searchTerm);
+                                    return (
+                                        <a className="list-group-item" href={subItem.link} key={subItem.name}>
+                                            {highlightedSubItemName}
+                                            <div className='search-path'>
+                                                <span>{highlightedItemName} {'->'} {highlightedSubItemName}</span>
+                                            </div>
+                                        </a>
+                                    );
+                                })}
+                            </React.Fragment>
+                        );
+                    })}
+                </div>
             )}
+
         </div>
     );
 };

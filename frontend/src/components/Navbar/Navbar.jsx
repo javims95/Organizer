@@ -41,9 +41,9 @@ const Navbar = () => {
 
     return (
         <div className="page-header">
-            <nav className='main-menu'>                
+            <nav className='navbar'>                
                 <Search />
-                <ul>
+                <ul className='primary-nav'>
                     {menuItems.map((menuItem) => (
                         <li className={menuItem.subItems ? 'has-dropdown' : ''} key={menuItem.name}>
                             {menuItem.subItems ? (
