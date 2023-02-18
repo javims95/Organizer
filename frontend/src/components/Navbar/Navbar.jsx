@@ -10,6 +10,7 @@ const Navbar = () => {
     const [isHovering, setIsHovering] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const ulRef = useRef(null);
+    const isLogged = true;
 
     const handleFullScreenChange = () => {
         setIsFullScreen(document.fullscreenElement !== null);
@@ -32,6 +33,9 @@ const Navbar = () => {
 
     const handleHideMenu = () => {
         setMenuHidden(!menuHidden);
+        if (document.body.classList.contains('nav-expanded-NT')) {
+            document.body.classList.remove('nav-expanded-NT')
+        }
         if (!menuHidden) {
             document.body.classList.remove('nav-expanded');
             document.body.classList.add('nav-collapsed');
@@ -41,6 +45,11 @@ const Navbar = () => {
         }
     };
 
+    useEffect(() => {
+        if (isLogged) {
+            document.body.classList.add('nav-expanded-NT');
+        }
+    }, [isLogged]);
 
     useEffect(() => {
         const handleTransitionEnd = (e) => {
@@ -95,67 +104,79 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className='navbar-primary' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                <Search />
-                <ul className='primary-nav'>
-                    {menuItems.map((menuItem) => (
-                        <li className={menuItem.subItems ? 'has-dropdown' : ''} key={menuItem.name}>
-                            {menuItem.subItems ? (
-                                <a href={menuItem.link} onClick={(e) => handleClick(e, menuItem.name)}>
-                                    <Icon icon={menuItem.icon} width="20" height="20" />
-                                    <span className="nav-link">{menuItem.name}</span>
-                                    <Icon icon={'angle-left'} width="20" height="20" className={open[menuItem.name] ? 'dropdown down' : 'dropdown'} />
+            {isLogged ? (
+                <>
+                    <nav className='navbar-primary' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                        <Search />
+                        <ul className='primary-nav'>
+                            {menuItems.map((menuItem) => (
+                                <li className={menuItem.subItems ? 'has-dropdown' : ''} key={menuItem.name}>
+                                    {menuItem.subItems ? (
+                                        <a href={menuItem.link} onClick={(e) => handleClick(e, menuItem.name)}>
+                                            <Icon icon={menuItem.icon} width="20" height="20" />
+                                            <span className="nav-link">{menuItem.name}</span>
+                                            <Icon icon={'angle-left'} width="20" height="20" className={open[menuItem.name] ? 'dropdown down' : 'dropdown'} />
+                                        </a>
+                                    ) : (
+                                        <a href={menuItem.link}>
+                                            <Icon icon={menuItem.icon} width="20" height="20" />
+                                            <span className="nav-link">{menuItem.name}</span>
+                                        </a>
+                                    )}
+                                    {menuItem.subItems && (
+                                        <ul
+                                            className={`subitem-dropdown ${open[menuItem.name] ? 'open' : 'closed'}`}
+                                            ref={ulRef}
+                                        >
+                                            {menuItem.subItems.map((subItem) => (
+                                                <li key={subItem.name}>
+                                                    <a href={subItem.link}>
+                                                        <Icon icon={'circle'} width="20" height="20" />
+                                                        <span className="nav-link">{subItem.name}</span>
+                                                    </a>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                    <nav className='navbar-secondary'>
+                        <ul className='nav-list-left'>
+                            <li>
+                                <a className='toggle-menu nav-link' href="#" onClick={handleHideMenu}>
+                                    <Icon icon="bars" width="20" height="20" className={'icon-menu'} />
                                 </a>
-                            ) : (
-                                <a href={menuItem.link}>
-                                    <Icon icon={menuItem.icon} width="20" height="20" />
-                                    <span className="nav-link">{menuItem.name}</span>
+                            </li>
+                            <li>
+                                <a className='nav-link' href="/">Inicio</a>
+                            </li>
+                        </ul>
+                        <ul className='nav-list-notification'>
+                            <li>
+                                <a className='nav-link' href="#">
+                                    <Icon icon="bell" width="20" height="20" className={'icon-menu'} />
+                                    <span className='notification-counter'>12</span>
                                 </a>
-                            )}
-                            {menuItem.subItems && (
-                                <ul
-                                    className={`subitem-dropdown ${open[menuItem.name] ? 'open' : 'closed'}`}
-                                    ref={ulRef}
-                                >
-                                    {menuItem.subItems.map((subItem) => (
-                                        <li key={subItem.name}>
-                                            <a href={subItem.link}>
-                                                <Icon icon={'circle'} width="20" height="20" />
-                                                <span className="nav-link">{subItem.name}</span>
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-            <nav className='navbar-secondary'>
-                <ul className='nav-list-left'>
-                    <li>
-                        <a className='toggle-menu nav-link' href="#" onClick={handleHideMenu}>
-                            <Icon icon="bars" width="20" height="20" className={'icon-menu'} />
-                        </a>
-                    </li>
-                    <li>
-                        <a className='nav-link' href="">Inicio</a>
-                    </li>
-                </ul>
-                <ul className='nav-list-notification'>
-                    <li>
-                        <a className='nav-link' href="#">
-                            <Icon icon="bell" width="20" height="20" className={'icon-menu'} />
-                            <span className='notification-counter'>12</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a className='nav-link' href="#" onClick={handleFullScreen}>
-                            <Icon icon={isFullScreen ? 'compress-arrows' : 'expand-arrows'} width="20" height="20" className={'icon-menu'} />
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                            </li>
+                            <li>
+                                <a className='nav-link' href="#" onClick={handleFullScreen}>
+                                    <Icon icon={isFullScreen ? 'compress-arrows' : 'expand-arrows'} width="20" height="20" className={'icon-menu'} />
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </>
+            ) : (
+                <>
+                    <nav className='navbar'>
+                        <ul className='nav-list-left'>
+                          
+                        </ul>
+                    </nav>
+                </>
+            )}
         </>
     );
 };

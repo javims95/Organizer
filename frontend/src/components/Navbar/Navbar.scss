@@ -40,7 +40,7 @@ body {
                 .subitem-dropdown.open {
                     max-height: 250px;
                     visibility: visible;
-                    transition: max-height .5s ease-out, visibility .5s ease-out;
+                    // transition: max-height .5s ease-out, visibility .5s ease-out;
                 }
             }
 
@@ -52,7 +52,7 @@ body {
 
                 * {
                     overflow: hidden;
-                    text-overflow: ellipsis;
+                    // text-overflow: ellipsis;
                     -webkit-transition: all .5s ease;
                     -moz-transition: all .5s ease;
                     -o-transition: all .5s ease;
@@ -116,7 +116,6 @@ body {
     &.nav-collapsed {
         .navbar-primary {
             width: 4.6rem;
-
         }
 
         .search {
@@ -181,12 +180,13 @@ body {
         .nav-list-left {
             display: flex;
             flex-direction: row;
-            align-items: center;            
+            align-items: center;
         }
 
         .nav-list-notification {
             display: flex;
             margin-right: 10px;
+
             .nav-link {
                 .notification-counter {
                     color: #1f2d3d;
@@ -202,5 +202,20 @@ body {
             }
         }
 
+    }
+
+    // Expand navbar without transition
+    &.nav-expanded-NT {
+        .navbar-primary {
+            width: 230px;
+        }
+
+        .navbar-secondary {
+            margin-left: 230px;
+        }
+
+        main {
+            margin-left: 230px;
+        }
     }
 }
