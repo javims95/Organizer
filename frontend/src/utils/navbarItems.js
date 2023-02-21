@@ -1,4 +1,4 @@
-const menuItems = [
+export const navItemsLogged = [
     {
         name: "Inicio",
         icon: "circle-user",
@@ -43,4 +43,25 @@ const menuItems = [
     }
 ];
 
-export default menuItems;
+export const navItemsNoLogged = [
+    [
+        {
+            name: "Inicio",
+            link: "/",
+        },
+        {
+            name: "Link left 2",
+            link: "/calendar4",
+        }
+    ], 
+    [
+        {
+            name: "Link right",
+            link: "/calendar",
+        },
+        {
+            name: "Login",
+            link: "/login",
+        }
+    ]
+];

@@ -3,9 +3,8 @@ const path = require('path');
 module.exports = {
     entry: './src/index.js',
     output: {
-        filename: 'bundle.js',
+        filename: '[name].js',
         path: path.join(__dirname, 'public'),
-        publicPath: '/'
     },
     module: {
         rules: [{
@@ -22,8 +21,15 @@ module.exports = {
             ]
         }]
     },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+        alias: {
+            '@utils': path.resolve(__dirname, 'src/utils'),
+            '@styles': path.resolve(__dirname, 'src/styles')
+        }
+    },
     mode: 'development',
     devServer: {
-    historyApiFallback: true
-  }
+        historyApiFallback: true
+    }
 };

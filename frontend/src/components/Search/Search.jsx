@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './Search.scss'
-import menuItems from '../Navbar/conf/menuItems';
-import Icon from '../icon/icon.jsx';
+import { navItemsLogged } from '@utils/navbarItems';
+import Icon from '../icon/icon';
 
 const Menu = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
-    const filteredItems = menuItems.filter((item) => {
+    const filteredItems = navItemsLogged.filter((item) => {
         if (item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
             return true;
         }

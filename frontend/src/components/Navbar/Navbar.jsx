@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.scss';
-import Icon from '../icon/icon.jsx';
-import menuItems from './conf/menuItems';
-import Search from '../Search/Search.jsx'
+import Icon from '../icon/icon';
+import Search from '../Search/Search'
+import { navItemsLogged, navItemsNoLogged } from '@utils/navbarItems';
 
 const Navbar = () => {
     const [open, setOpen] = useState({});
@@ -10,7 +10,7 @@ const Navbar = () => {
     const [isHovering, setIsHovering] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const ulRef = useRef(null);
-    const isLogged = true;
+    const isLogged = false;
 
     const handleFullScreenChange = () => {
         setIsFullScreen(document.fullscreenElement !== null);
@@ -48,6 +48,8 @@ const Navbar = () => {
     useEffect(() => {
         if (isLogged) {
             document.body.classList.add('nav-expanded-NT');
+        } else {
+            document.body.classList.add('nav-expanded-NL');
         }
     }, [isLogged]);
 
@@ -109,7 +111,7 @@ const Navbar = () => {
                     <nav className='navbar-primary' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                         <Search />
                         <ul className='primary-nav'>
-                            {menuItems.map((menuItem) => (
+                            {navItemsLogged.map((menuItem) => (
                                 <li className={menuItem.subItems ? 'has-dropdown' : ''} key={menuItem.name}>
                                     {menuItem.subItems ? (
                                         <a href={menuItem.link} onClick={(e) => handleClick(e, menuItem.name)}>
@@ -171,8 +173,24 @@ const Navbar = () => {
             ) : (
                 <>
                     <nav className='navbar'>
-                        <ul className='nav-list-left'>
-                          
+                        <a className='logo' href="/">Organizator</a>
+                        <ul className='nav-list'>
+                            {navItemsNoLogged[0].map((menuItem) => (
+                                <li key={menuItem.name}>
+                                        <a className='nav-link' href={menuItem.link} >
+                                            {menuItem.name}
+                                        </a>                               
+                                </li>
+                            ))}
+                        </ul>
+                        <ul className='nav-list'>
+                            {navItemsNoLogged[0].map((menuItem) => (
+                                <li key={menuItem.name}>
+                                        <a className='nav-link' href={menuItem.link} >
+                                            {menuItem.name}
+                                        </a>                               
+                                </li>
+                            ))}
                         </ul>
                     </nav>
                 </>
