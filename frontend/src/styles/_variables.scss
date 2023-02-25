@@ -26,6 +26,11 @@ $primary-btn-hover: #0747a6;
 $primary-link: #172b4d;
 $primary-link-hover: #0065ff;
 
+// Danger
+$danger-color: rgb(220 53 69 / 65%);
+
+// Icons
+$alert-icon: '<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
 
 
 
@@ -65,7 +70,6 @@ $success-light: #7ed9a6;
 $success-dark: #1e7e34;
 
 /* Colores de peligro */
-$danger-color: #dc3545;
 $danger-light: #f5c2c7;
 $danger-dark: #bd2130;
 
