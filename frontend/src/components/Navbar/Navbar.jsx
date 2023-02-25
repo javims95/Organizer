@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.scss';
 import Icon from '../icon/icon';
 import Search from '../Search/Search'
-import { navItemsLogged, navItemsNoLogged } from '@utils/navbarItems';
+import { navItemsLogged, navItemsNoLogged } from './conf/navbarItems';
+import User from '../User/User';
 
 const Navbar = () => {
     const [open, setOpen] = useState({});
@@ -173,25 +174,25 @@ const Navbar = () => {
             ) : (
                 <>
                     <nav className='navbar'>
-                        <a className='logo' href="/">Organizator</a>
-                        <ul className='nav-list'>
+                        <div className='nav-list'>
+                            <a className='logo' href="/">Organizator</a>
                             {navItemsNoLogged[0].map((menuItem) => (
-                                <li key={menuItem.name}>
-                                        <a className='nav-link' href={menuItem.link} >
-                                            {menuItem.name}
-                                        </a>                               
-                                </li>
+                                <a className='nav-link' href={menuItem.link} key={menuItem.name} >
+                                    {menuItem.name}
+                                </a>
                             ))}
-                        </ul>
-                        <ul className='nav-list'>
-                            {navItemsNoLogged[0].map((menuItem) => (
-                                <li key={menuItem.name}>
-                                        <a className='nav-link' href={menuItem.link} >
-                                            {menuItem.name}
-                                        </a>                               
-                                </li>
+                        </div>
+                        <div className='nav-list login'>
+                            {navItemsNoLogged[1].map((menuItem) => (
+                                <a
+                                    className={menuItem.className ? 'nav-buttons ' + menuItem.className : 'nav-buttons'}
+                                    href={menuItem.link}
+                                    key={menuItem.name}
+                                >
+                                    {menuItem.name}
+                                </a>
                             ))}
-                        </ul>
+                        </div>
                     </nav>
                 </>
             )}

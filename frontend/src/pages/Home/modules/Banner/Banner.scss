@@ -1,0 +1,78 @@
+@import '@styles/variables';
+
+.full-width-banner {
+    background: url(./white-wave-bg.svg) center bottom -0.5px / 100% 14% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
+    background-blend-mode: normal, normal;
+    color: $white;
+
+    .banner {
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        width: 100%;
+
+        @media screen and (min-width: 576px) {
+            max-width: 540px;
+        }
+
+        @media screen and (min-width: 768px) {
+            max-width: 720px;
+        }
+
+        @media screen and (min-width: 992px) {
+            max-width: 960px;
+        }
+
+        @media screen and (min-width: 1200px) {
+            max-width: 1140px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            -webkit-box-align: center;
+            -webkit-box-pack: start;
+            margin-left: -1rem;
+            margin-right: -1rem;
+
+            .text-left {
+                padding: 8rem 1rem 1rem;
+                position: relative;
+                scroll-margin-top: 72px;
+                text-align: center;
+                width: 100%;
+                margin-top: 0px;
+
+                @media screen and (min-width: 992px) {
+                    text-align: left;
+                    display: block;
+                    flex: 0 0 auto;
+                    width: 50%;
+                    margin-bottom: 0px;
+                    padding-bottom: 8rem;
+                }
+
+                h1 {
+                    margin-bottom: 0.5rem;
+                    @media screen and (min-width: 768px) {
+                        font-size: 2.75rem;
+                        line-height: 1.18182;
+                    }
+                    @media screen and (min-width: 992px) {
+                        font-size: 3rem;
+                        line-height: 1.25;
+                    }
+
+                }
+
+                p {
+                    font-size: 20px;
+                    margin-bottom: 1.5rem;
+                }
+            }
+        }
+    }
+}

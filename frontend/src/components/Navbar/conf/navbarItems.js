@@ -44,6 +44,7 @@ export const navItemsLogged = [
 ];
 
 export const navItemsNoLogged = [
+    // center
     [
         {
             name: "Inicio",
@@ -53,15 +54,17 @@ export const navItemsNoLogged = [
             name: "Link left 2",
             link: "/calendar4",
         }
-    ], 
+    ],
+    // right
     [
         {
-            name: "Link right",
-            link: "/calendar",
+            name: "Iniciar sesión",
+            link: "/login",
         },
         {
-            name: "Login",
-            link: "/login",
+            name: "Obtener gratis",
+            link: "/signup",
+            className: 'get-free'
         }
     ]
 ];

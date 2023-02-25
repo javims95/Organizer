@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Search.scss'
-import { navItemsLogged } from '@utils/navbarItems';
+import { navItemsLogged } from '../Navbar/conf/navbarItems';
 import Icon from '../icon/icon';
 
 const Menu = () => {
