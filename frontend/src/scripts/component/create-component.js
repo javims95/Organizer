@@ -1,13 +1,9 @@
-import inquirer from 'inquirer';
-import * as fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import cli from 'cli-color';
+const inquirer = require('inquirer');
+const fs = require('fs');
+const path = require('path');
+const cli = require('cli-color');
 
-import template from './component-parts.js'
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const template = require('./component-parts.js');
 
 inquirer
     .prompt([
@@ -30,22 +26,28 @@ inquirer
         },
     ])
     .then(function (answer) {
-        const componentName = answer.name
+        const {name: componentName, reactExtension, stylesExtension} = answer;
         const componentPath = path.join(__dirname, '..', '..', 'components', componentName);
-        const reactExtension = answer.reactExtension
-        const stylesExtension = answer.stylesExtension
 
         // Create the component directory
         fs.mkdirSync(componentPath);
 
-        // Create the component JSX/TSX file
+        // Create the component logic file
         fs.writeFileSync(path.join(componentPath, `${componentName}${reactExtension}`), template.react(componentName, reactExtension, stylesExtension));
 
-        // Create the component CSS file
+        // Create the component styles file
         fs.writeFileSync(path.join(componentPath, `${componentName}${stylesExtension}`), '');
+
+        // Create the component styles file
+        if (reactExtension === '.tsx') {
+            fs.writeFileSync(path.join(componentPath, `${componentName}.VM${reactExtension}`), template.interface());
+        }
 
         // Messages
         console.log(cli.green(`+ Created ${componentName}${reactExtension} component`));
+        if (reactExtension === '.tsx') {
+            console.log(cli.green(`+ Created ${componentName}.VM${reactExtension} component`));
+        }
         console.log(cli.green(`+ Created ${componentName}${stylesExtension} component`));
 
     });
