@@ -1,78 +1,188 @@
 @import '@styles/variables';
 
-.full-width-banner {
-    background: url(./white-wave-bg.svg) center bottom -0.5px / 100% 14% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
-    background-blend-mode: normal, normal;
-    color: $white;
+.header {
+    position: relative;
+    text-align: center;
+    background: linear-gradient(60deg, rgba(84, 58, 183, 1) 0%, rgba(0, 172, 193, 1) 100%);
+    color: white;
 
-    .banner {
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: 1rem;
-        padding-right: 1rem;
+    .inner-header {
         width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
 
-        @media screen and (min-width: 576px) {
-            max-width: 540px;
-        }
+        .banner {
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            width: 100%;
 
-        @media screen and (min-width: 768px) {
-            max-width: 720px;
-        }
+            @media screen and (min-width: 320px) {
+                max-width: 300px;
+            }
 
-        @media screen and (min-width: 992px) {
-            max-width: 960px;
-        }
+            @media screen and (min-width: 425px) {
+                max-width: 400px;
+            }
 
-        @media screen and (min-width: 1200px) {
-            max-width: 1140px;
-        }
+            @media screen and (min-width: 576px) {
+                max-width: 540px;
+                margin-top: 30px;
+            }
 
-        .row {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-            -webkit-box-align: center;
-            -webkit-box-pack: start;
-            margin-left: -1rem;
-            margin-right: -1rem;
+            @media screen and (min-width: 768px) {
+                max-width: 720px;
+            }
 
-            .text-left {
-                padding: 8rem 1rem 1rem;
-                position: relative;
-                scroll-margin-top: 72px;
-                text-align: center;
-                width: 100%;
-                margin-top: 0px;
+            @media screen and (min-width: 992px) {
+                max-width: 960px;
+            }
 
-                @media screen and (min-width: 992px) {
-                    text-align: left;
-                    display: block;
-                    flex: 0 0 auto;
-                    width: 50%;
-                    margin-bottom: 0px;
-                    padding-bottom: 8rem;
-                }
+            @media screen and (min-width: 1200px) {
+                max-width: 1140px;
+            }
 
-                h1 {
-                    margin-bottom: 0.5rem;
-                    @media screen and (min-width: 768px) {
-                        font-size: 2.75rem;
-                        line-height: 1.18182;
-                    }
+            .row {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                -webkit-box-align: center;
+                -webkit-box-pack: start;
+
+                .text-left {
+                    padding: 8rem 1rem 1rem;
+                    margin-top: 0px;
+
                     @media screen and (min-width: 992px) {
-                        font-size: 3rem;
-                        line-height: 1.25;
+                        text-align: left;
+                        display: block;
+                        flex: 0 0 auto;
+                        width: 50%;
+                        margin-bottom: 0px;
+                        padding-bottom: 8rem;
                     }
 
+                    .form {
+                        display: flex;
+                        justify-content: space-around;
+                    }
+
+                    h1 {
+                        margin-bottom: 0.5rem;
+
+                        @media screen and (min-width: 768px) {
+                            font-size: 2.75rem;
+                            line-height: 1.18182;
+                        }
+
+                        @media screen and (min-width: 992px) {
+                            font-size: 3rem;
+                            line-height: 1.25;
+                        }
+
+                    }
+
+                    p {
+                        font-size: 20px;
+                        margin-bottom: 1.5rem;
+                    }
                 }
 
-                p {
-                    font-size: 20px;
-                    margin-bottom: 1.5rem;
+                .image-right {
+                    flex: 1;
+                    text-align: center;
+
+                    img {
+                        max-width: 100%;
+                        position: relative;
+                        z-index: 1;
+                    }
                 }
             }
         }
+    }
+
+    .waves {
+        position: relative;
+        width: 100%;
+        height: 15vh;
+        margin-bottom: -7px;
+        /*Fix for safari gap*/
+        min-height: 100px;
+        max-height: 150px;
+
+        /* Animation */
+        .parallax>use {
+            animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
+        }
+
+        .parallax>use:nth-child(1) {
+            animation-delay: -2s;
+            animation-duration: 7s;
+        }
+
+        .parallax>use:nth-child(2) {
+            animation-delay: -3s;
+            animation-duration: 10s;
+        }
+
+        .parallax>use:nth-child(3) {
+            animation-delay: -4s;
+            animation-duration: 13s;
+        }
+
+        .parallax>use:nth-child(4) {
+            animation-delay: -5s;
+            animation-duration: 20s;
+        }
+    }
+}
+
+
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@keyframes move-forever {
+    0% {
+        transform: translate3d(-90px, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(85px, 0, 0);
+    }
+}
+
+/*Shrinking for mobile*/
+@media (min-width: 768px) {
+    .header .inner-header {
+        height: 830px;
+
+        .banner .row .image-right img {
+            position: relative;
+            z-index: 1;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .waves {
+        height: 40px;
+        min-height: 40px;
+    }
+
+    .content {
+        height: 30vh;
+    }
+
+    h1 {
+        font-size: 24px;
     }
 }

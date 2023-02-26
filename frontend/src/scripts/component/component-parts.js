@@ -7,9 +7,9 @@ import './${componentName}${stylesExtension}';
 export default class ${componentName} extends Component {
     render() {
         return (
-            <div>
+            <>
                 {/* Your code here */}
-            </div>
+            </>
         );
     }
 }
@@ -18,13 +18,16 @@ export default class ${componentName} extends Component {
         return (
 `import React from 'react';
 import './${componentName}${stylesExtension}';
-import { Props } from './${componentName}.VM';
 
-const ${componentName} = (props: Props) => {
+interface ${componentName}VM {
+    title: string;
+}
+
+const ${componentName} = (props: ${componentName}VM) => {
     return (
-        <div>
+        <>
             <h1>{props.title}</h1>
-        </div>
+        </>
     );
 };
 
@@ -33,12 +36,4 @@ export default ${componentName};
     }
 }
 
-const interface = () => {
-  return (
-`export interface Props {
-    title: string;
-}`
-  )
-}
-
-module.exports = { react, interface }
+module.exports = { react }

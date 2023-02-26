@@ -9,7 +9,6 @@ a {
 }
 
 body {
-
     // General
     .navbar-primary {
         position: fixed;
@@ -45,6 +44,7 @@ body {
                 display: flex;
                 align-items: center;
                 padding: 12px 15px;
+                position: relative;
 
                 * {
                     overflow: hidden;

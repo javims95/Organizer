@@ -51,8 +51,8 @@ export const navItemsNoLogged = [
             link: "/",
         },
         {
-            name: "Link left 2",
-            link: "/calendar4",
+            name: "Calendar",
+            link: "/calendar",
         }
     ],
     // right

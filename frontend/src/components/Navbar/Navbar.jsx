@@ -173,6 +173,7 @@ const Navbar = () => {
                 </>
             ) : (
                 <>
+                {window.innerWidth}
                     <nav className='navbar'>
                         <div className='nav-list'>
                             <a className='logo' href="/">Organizator</a>

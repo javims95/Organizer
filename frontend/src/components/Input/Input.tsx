@@ -16,6 +16,9 @@ interface InputVM {
 }
 
 const Input: React.FC<InputVM> = (props: InputVM) => {
+
+    // const { id, classname, type, placeholder, borderRadius, value, isValid } = props;
+
     const [values, setValues] = useState<InputVM>({
         id: props.id || '',
         classname: props.classname || '',

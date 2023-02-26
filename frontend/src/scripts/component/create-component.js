@@ -38,16 +38,8 @@ inquirer
         // Create the component styles file
         fs.writeFileSync(path.join(componentPath, `${componentName}${stylesExtension}`), '');
 
-        // Create the component styles file
-        if (reactExtension === '.tsx') {
-            fs.writeFileSync(path.join(componentPath, `${componentName}.VM${reactExtension}`), template.interface());
-        }
-
         // Messages
         console.log(cli.green(`+ Created ${componentName}${reactExtension} component`));
-        if (reactExtension === '.tsx') {
-            console.log(cli.green(`+ Created ${componentName}.VM${reactExtension} component`));
-        }
         console.log(cli.green(`+ Created ${componentName}${stylesExtension} component`));
 
     });
