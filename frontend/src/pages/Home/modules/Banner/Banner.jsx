@@ -44,34 +44,32 @@ function Banner() {
             <div className="header">
                 <div className="inner-header flex">
                     {/* Content Banner */}
-                    <div className="banner">
-                        <div className="row">
-                            <div className="text-left">
-                                <div>
-                                    <h1>Oranizator unifica tus tareas, compañeros de equipo y herramientas</h1>
-                                    <p>Mantenlo todo en el mismo lugar, aunque tu equipo no lo esté.</p>
-                                </div>
-                                <div className="form">
-                                    <Input
-                                        id="email"
-                                        classname=""
-                                        type="mail"
-                                        placeholder="Correo electrónico"
-                                        borderRadius={true}
-                                        value=""
-                                        onChange={(event) => console.log(event.target.value)}
-                                        onFocus={(event) => console.log('Foco dentro')}
-                                        onBlur={(event) => console.log('Foco fuera')}
-                                    />
-                                    <Button
-                                        id='submit'
-                                        text='Regístrate, ¡es gratis!'
-                                    />
-                                </div>
+                    <div className="row">
+                        <div className="text-left">
+                            <div className='mb'>
+                                <h1>Organizator unifica tus tareas, compañeros de equipo y herramientas</h1>
+                                <p>Mantenlo todo en el mismo lugar, aunque tu equipo no lo esté.</p>
                             </div>
-                            <div className='image-right'>
-                                <img src={imageSrc} alt="" />
+                            <div className="form">
+                                <Input
+                                    id="email"
+                                    classname=""
+                                    type="mail"
+                                    placeholder="Correo electrónico"
+                                    borderRadius={true}
+                                    value=""
+                                    onChange={(event) => console.log(event.target.value)}
+                                    onFocus={(event) => console.log('Foco dentro')}
+                                    onBlur={(event) => console.log('Foco fuera')}
+                                />
+                                <Button
+                                    id='submit'
+                                    text='Regístrate, ¡es gratis!'
+                                />
                             </div>
+                        </div>
+                        <div className='image-right'>
+                            <img src={imageSrc} alt="" />
                         </div>
                     </div>
                 </div>

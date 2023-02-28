@@ -1,12 +1,12 @@
 @import '@styles/variables';
 
 .input {
+    width: 100%;
+    max-width: 100%;
     font-size: 1rem;
     padding: 0.7rem 0.75rem 0.8rem;
     border: 1px solid rgb(223, 225, 230);
-    max-width: 300px;
     transition: all 250ms ease-out 0s;
-    width: 376px;
 
     &.border-radius {
         border-radius: 0.3rem;

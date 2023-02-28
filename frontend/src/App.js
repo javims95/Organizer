@@ -8,7 +8,7 @@ export default function App() {
     return (
         <BrowserRouter>
             <header>
-                <Navbar/>
+                {/* <Navbar/> */}
             </header>
             <main>
                 <Routes>
