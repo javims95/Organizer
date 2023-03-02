@@ -3,7 +3,7 @@ import './Navbar.scss';
 import Icon from '../icon/icon';
 import Search from '../Search/Search'
 import { navItemsLogged, navItemsNoLogged } from './conf/navbarItems';
-import User from '../User/User';
+import { GetSize } from '@utils/Environment/GetSize'
 
 const Navbar = () => {
     const [open, setOpen] = useState({});
@@ -105,77 +105,94 @@ const Navbar = () => {
         }
     };
 
-    return (
-        <>
-            {isLogged ? (
-                <>
-                    <nav className='navbar-primary' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                        <Search />
-                        <ul className='primary-nav'>
-                            {navItemsLogged.map((menuItem) => (
-                                <li className={menuItem.subItems ? 'has-dropdown' : ''} key={menuItem.name}>
-                                    {menuItem.subItems ? (
-                                        <a href={menuItem.link} onClick={(e) => handleClick(e, menuItem.name)}>
-                                            <Icon icon={menuItem.icon} width="20" height="20" />
-                                            <span className="nav-link">{menuItem.name}</span>
-                                            <Icon icon={'angle-left'} width="20" height="20" className={open[menuItem.name] ? 'dropdown down' : 'dropdown'} />
-                                        </a>
-                                    ) : (
-                                        <a href={menuItem.link}>
-                                            <Icon icon={menuItem.icon} width="20" height="20" />
-                                            <span className="nav-link">{menuItem.name}</span>
-                                        </a>
-                                    )}
-                                    {menuItem.subItems && (
-                                        <ul
-                                            className={`subitem-dropdown ${open[menuItem.name] ? 'open' : 'closed'}`}
-                                            ref={ulRef}
-                                        >
-                                            {menuItem.subItems.map((subItem) => (
-                                                <li key={subItem.name}>
-                                                    <a href={subItem.link}>
-                                                        <Icon icon={'circle'} width="20" height="20" />
-                                                        <span className="nav-link">{subItem.name}</span>
-                                                    </a>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
-                    <nav className='navbar-secondary'>
-                        <ul className='nav-list-left'>
-                            <li>
-                                <a className='toggle-menu nav-link' href="#" onClick={handleHideMenu}>
-                                    <Icon icon="bars" width="20" height="20" className={'icon-menu'} />
-                                </a>
+    const [isMenuMobOpen, setIsMenuMobOpen] = useState(false);
+
+    const handleMenuMobClick = () => {
+        setIsMenuMobOpen(!isMenuMobOpen);
+        setMenuHeight(isMenuMobOpen ? "0px" : `${document.querySelector('.navbar-content').scrollHeight}px`);
+    };
+
+
+    if (isLogged) {
+        return (
+            <>
+                <nav className='navbar-primary' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                    <Search />
+                    <ul className='primary-nav'>
+                        {navItemsLogged.map((menuItem) => (
+                            <li className={menuItem.subItems ? 'has-dropdown' : ''} key={menuItem.name}>
+                                {menuItem.subItems ? (
+                                    <a href={menuItem.link} onClick={(e) => handleClick(e, menuItem.name)}>
+                                        <Icon icon={menuItem.icon} width="20" height="20" />
+                                        <span className="nav-link">{menuItem.name}</span>
+                                        <Icon icon={'angle-left'} width="20" height="20" className={open[menuItem.name] ? 'dropdown down' : 'dropdown'} />
+                                    </a>
+                                ) : (
+                                    <a href={menuItem.link}>
+                                        <Icon icon={menuItem.icon} width="20" height="20" />
+                                        <span className="nav-link">{menuItem.name}</span>
+                                    </a>
+                                )}
+                                {menuItem.subItems && (
+                                    <ul
+                                        className={`subitem-dropdown ${open[menuItem.name] ? 'open' : 'closed'}`}
+                                        ref={ulRef}
+                                    >
+                                        {menuItem.subItems.map((subItem) => (
+                                            <li key={subItem.name}>
+                                                <a href={subItem.link}>
+                                                    <Icon icon={'circle'} width="20" height="20" />
+                                                    <span className="nav-link">{subItem.name}</span>
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             </li>
-                            <li>
-                                <a className='nav-link' href="/">Inicio</a>
-                            </li>
-                        </ul>
-                        <ul className='nav-list-notification'>
-                            <li>
-                                <a className='nav-link' href="#">
-                                    <Icon icon="bell" width="20" height="20" className={'icon-menu'} />
-                                    <span className='notification-counter'>12</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a className='nav-link' href="#" onClick={handleFullScreen}>
-                                    <Icon icon={isFullScreen ? 'compress-arrows' : 'expand-arrows'} width="20" height="20" className={'icon-menu'} />
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </>
-            ) : (
-                <>
-                    <nav className='navbar'>
+                        ))}
+                    </ul>
+                </nav>
+                <nav className='navbar-secondary'>
+                    <ul className='nav-list-left'>
+                        <li>
+                            <a className='toggle-menu nav-link' href="#" onClick={handleHideMenu}>
+                                <Icon icon="bars" width="20" height="20" className={'icon-menu'} />
+                            </a>
+                        </li>
+                        <li>
+                            <a className='nav-link' href="/">Inicio</a>
+                        </li>
+                    </ul>
+                    <ul className='nav-list-notification'>
+                        <li>
+                            <a className='nav-link' href="#">
+                                <Icon icon="bell" width="20" height="20" className={'icon-menu'} />
+                                <span className='notification-counter'>12</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a className='nav-link' href="#" onClick={handleFullScreen}>
+                                <Icon icon={isFullScreen ? 'compress-arrows' : 'expand-arrows'} width="20" height="20" className={'icon-menu'} />
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <nav>
+                    <div className={`navbar ${isMenuMobOpen ? 'border' : ''}`}>
+                        <a className='logo' href="/">Organizator</a>
+                        <div className='toggle-container' onClick={handleMenuMobClick}>
+                            <Icon
+                                icon={'bars'}
+                                className={`toggle-mobile ${isMenuMobOpen ? 'open' : ''}`}
+                                width={20}
+                            />
+                        </div>
                         <div className='nav-list'>
-                            <a className='logo' href="/">Organizator</a>
                             {navItemsNoLogged[0].map((menuItem) => (
                                 <a className='nav-link' href={menuItem.link} key={menuItem.name} >
                                     {menuItem.name}
@@ -193,11 +210,22 @@ const Navbar = () => {
                                 </a>
                             ))}
                         </div>
-                    </nav>
-                </>
-            )}
-        </>
-    );
+                    </div>
+                    <div className={`navbar-content ${isMenuMobOpen ? 'open' : ''}`} >
+                        <ul>
+                            <li>hola</li>
+                            <li>solo algo</li>
+                            <li>de pruebas</li>
+                            <li>para ver</li>
+                            <li>como se ve</li>
+                            <li>a ver si todo</li>
+                            <li>está bien</li>
+                        </ul>
+                    </div>
+                </nav>
+            </>
+        )
+    }
 };
 
 export default Navbar;

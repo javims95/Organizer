@@ -9,6 +9,7 @@ a {
 }
 
 body {
+
     // General
     .navbar-primary {
         position: fixed;
@@ -225,8 +226,29 @@ body {
             height: 60px;
             max-width: 1320px;
             
+            &.border {
+                border-bottom: 1px solid gray;
+            }
+
+            .logo {
+                margin-left: 20px;
+            }
+
+            .toggle-container {
+                .toggle-mobile {
+                    display: none;
+
+                    @media (max-width: 768px) {
+                        display: block;
+                        margin-right: 20px;
+                    }
+                }
+            }
+
+
             a {
                 color: $primary-link;
+
                 &:hover {
                     color: $primary-link-hover;
                 }
@@ -237,22 +259,26 @@ body {
                 align-items: center;
                 margin-left: 3rem;
 
+                @media (max-width: 768px) {
+                    display: none;
+                }
+
                 &.login {
                     height: 100%;
 
                     .nav-buttons {
                         -webkit-box-align: center;
                         align-items: center;
-                        align-self: stretch;                        
+                        align-self: stretch;
                         display: flex;
                         font-size: 1.2rem;
                         height: 100%;
-                        padding: 0.5rem 1.5rem;                 
-                        
+                        padding: 0.5rem 1.5rem;
+
                         &.get-free {
                             background-color: $primary-btn;
                             color: $white;
-                            
+
                             &:hover {
                                 background-color: $primary-btn-hover;
 
@@ -263,9 +289,32 @@ body {
 
                 .nav-link {
                     margin: 0px 10px;
-                    padding: 10px;                   
+                    padding: 10px;
                 }
             }
         }
+
+        .navbar-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+            width: 100%;
+            padding: 0px 15px;
+            max-height: 0;
+            position: absolute;
+            visibility: hidden;
+            transition: max-height 0.8s ease-out, visibility 0.8s ease-out;
+            overflow: hidden;
+            z-index: 1;
+            background-color: $white;
+        }
+        
+        .navbar-content.open {
+            max-height: 70vh;
+            visibility: visible;
+        }
+
+
     }
 }
