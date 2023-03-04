@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Search.scss'
 import { navItemsLogged } from '../Navbar/conf/navbarItems';
-import Icon from '../icon/icon';
+import Icon from '@components/Icon/Icon';
 
 const Menu = () => {
     const [searchTerm, setSearchTerm] = useState('');

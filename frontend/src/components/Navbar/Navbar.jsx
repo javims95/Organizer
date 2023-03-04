@@ -1,50 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Navbar.scss';
-import Icon from '../icon/icon';
-import Search from '../Search/Search'
-import { navItemsLogged, navItemsNoLogged } from './conf/navbarItems';
-import { GetSize } from '@utils/Environment/GetSize'
+import LoggedIn from './LoggedIn/LoggedIn';
+import LoggedOut from './LogeedOut/LogeedOut';
 
 const Navbar = () => {
-    const [open, setOpen] = useState({});
-    const [menuHidden, setMenuHidden] = useState(false);
-    const [isHovering, setIsHovering] = useState(false);
-    const [isFullScreen, setIsFullScreen] = useState(false);
-    const ulRef = useRef(null);
     const isLogged = false;
+    // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-    const handleFullScreenChange = () => {
-        setIsFullScreen(document.fullscreenElement !== null);
-    };
-
-    const handleClick = (e, menuItem) => {
-        e.preventDefault();
-        setOpen({
-            ...open,
-            [menuItem]: !open[menuItem],
-        });
-        if (open[menuItem]) {
-            setTimeout(() => {
-                ulRef.current.classList.add('closed');
-            }, 500);
-        } else {
-            ulRef.current.classList.remove('closed');
-        }
-    };
-
-    const handleHideMenu = () => {
-        setMenuHidden(!menuHidden);
-        if (document.body.classList.contains('nav-expanded-NT')) {
-            document.body.classList.remove('nav-expanded-NT')
-        }
-        if (!menuHidden) {
-            document.body.classList.remove('nav-expanded');
-            document.body.classList.add('nav-collapsed');
-        } else {
-            document.body.classList.remove('nav-collapsed');
-            document.body.classList.add('nav-expanded');
-        }
-    };
+    // useEffect(() => {
+    //     const handleResize = () => setWindowWidth(window.innerWidth);
+    //     window.addEventListener('resize', handleResize);
+    //     return () => window.removeEventListener('resize', handleResize);
+    // }, []);
 
     useEffect(() => {
         if (isLogged) {
@@ -54,177 +21,10 @@ const Navbar = () => {
         }
     }, [isLogged]);
 
-    useEffect(() => {
-        const handleTransitionEnd = (e) => {
-            if (e.propertyName === 'height' && !open) {
-                setIsClosing(false);
-            }
-        };
-        const ulElement = ulRef.current;
-        if (ulElement) {
-            ulElement.addEventListener('transitionend', handleTransitionEnd);
-            return () => {
-                ulElement.removeEventListener('transitionend', handleTransitionEnd);
-            };
-        }
-    }, [open]);
-
-    useEffect(() => {
-        document.addEventListener('fullscreenchange', handleFullScreenChange);
-
-        return () => {
-            document.removeEventListener('fullscreenchange', handleFullScreenChange);
-        };
-    }, []);
-
-    const handleMouseEnter = () => {
-        if (document.body.classList.contains('nav-collapsed')) {
-            document.body.classList.remove('nav-collapsed');
-            document.body.classList.add('nav-expanded');
-            setIsHovering(true);
-        }
-    };
-
-    const handleMouseLeave = () => {
-        if (isHovering) {
-            document.body.classList.remove('nav-expanded');
-            document.body.classList.add('nav-collapsed');
-            setIsHovering(false);
-        }
-    };
-
-    const handleFullScreen = () => {
-        if (document.fullscreenEnabled) {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        }
-    };
-
-    const [isMenuMobOpen, setIsMenuMobOpen] = useState(false);
-
-    const handleMenuMobClick = () => {
-        setIsMenuMobOpen(!isMenuMobOpen);
-        setMenuHeight(isMenuMobOpen ? "0px" : `${document.querySelector('.navbar-content').scrollHeight}px`);
-    };
-
-
     if (isLogged) {
-        return (
-            <>
-                <nav className='navbar-primary' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                    <Search />
-                    <ul className='primary-nav'>
-                        {navItemsLogged.map((menuItem) => (
-                            <li className={menuItem.subItems ? 'has-dropdown' : ''} key={menuItem.name}>
-                                {menuItem.subItems ? (
-                                    <a href={menuItem.link} onClick={(e) => handleClick(e, menuItem.name)}>
-                                        <Icon icon={menuItem.icon} width="20" height="20" />
-                                        <span className="nav-link">{menuItem.name}</span>
-                                        <Icon icon={'angle-left'} width="20" height="20" className={open[menuItem.name] ? 'dropdown down' : 'dropdown'} />
-                                    </a>
-                                ) : (
-                                    <a href={menuItem.link}>
-                                        <Icon icon={menuItem.icon} width="20" height="20" />
-                                        <span className="nav-link">{menuItem.name}</span>
-                                    </a>
-                                )}
-                                {menuItem.subItems && (
-                                    <ul
-                                        className={`subitem-dropdown ${open[menuItem.name] ? 'open' : 'closed'}`}
-                                        ref={ulRef}
-                                    >
-                                        {menuItem.subItems.map((subItem) => (
-                                            <li key={subItem.name}>
-                                                <a href={subItem.link}>
-                                                    <Icon icon={'circle'} width="20" height="20" />
-                                                    <span className="nav-link">{subItem.name}</span>
-                                                </a>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-                <nav className='navbar-secondary'>
-                    <ul className='nav-list-left'>
-                        <li>
-                            <a className='toggle-menu nav-link' href="#" onClick={handleHideMenu}>
-                                <Icon icon="bars" width="20" height="20" className={'icon-menu'} />
-                            </a>
-                        </li>
-                        <li>
-                            <a className='nav-link' href="/">Inicio</a>
-                        </li>
-                    </ul>
-                    <ul className='nav-list-notification'>
-                        <li>
-                            <a className='nav-link' href="#">
-                                <Icon icon="bell" width="20" height="20" className={'icon-menu'} />
-                                <span className='notification-counter'>12</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a className='nav-link' href="#" onClick={handleFullScreen}>
-                                <Icon icon={isFullScreen ? 'compress-arrows' : 'expand-arrows'} width="20" height="20" className={'icon-menu'} />
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </>
-        );
+        return (<LoggedIn />);
     } else {
-        return (
-            <>
-                <nav>
-                    <div className={`navbar ${isMenuMobOpen ? 'border' : ''}`}>
-                        <a className='logo' href="/">Organizator</a>
-                        <div className='toggle-container' onClick={handleMenuMobClick}>
-                            <Icon
-                                icon={'bars'}
-                                className={`toggle-mobile ${isMenuMobOpen ? 'open' : ''}`}
-                                width={20}
-                            />
-                        </div>
-                        <div className='nav-list'>
-                            {navItemsNoLogged[0].map((menuItem) => (
-                                <a className='nav-link' href={menuItem.link} key={menuItem.name} >
-                                    {menuItem.name}
-                                </a>
-                            ))}
-                        </div>
-                        <div className='nav-list login'>
-                            {navItemsNoLogged[1].map((menuItem) => (
-                                <a
-                                    className={menuItem.className ? 'nav-buttons ' + menuItem.className : 'nav-buttons'}
-                                    href={menuItem.link}
-                                    key={menuItem.name}
-                                >
-                                    {menuItem.name}
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                    <div className={`navbar-content ${isMenuMobOpen ? 'open' : ''}`} >
-                        <ul>
-                            <li>hola</li>
-                            <li>solo algo</li>
-                            <li>de pruebas</li>
-                            <li>para ver</li>
-                            <li>como se ve</li>
-                            <li>a ver si todo</li>
-                            <li>está bien</li>
-                        </ul>
-                    </div>
-                </nav>
-            </>
-        )
+        return (<LoggedOut />)
     }
 };
 

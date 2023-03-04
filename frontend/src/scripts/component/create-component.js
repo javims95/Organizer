@@ -16,7 +16,7 @@ inquirer
             name: 'reactExtension',
             message: 'Extensión del archivo React',
             type: 'list',
-            choices: ['.jsx', '.tsx']
+            choices: ['.tsx', '.jsx']
         },
         {
             name: 'stylesExtension',

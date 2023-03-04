@@ -1,0 +1,181 @@
+@import '@styles/variables';
+
+.nav-expanded-NL {
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 auto;
+        background: $white;
+        height: 60px;
+        max-width: 1320px;
+
+        &.border {
+            border-bottom: 1px solid gray;
+        }
+
+        .logo {
+            margin-left: 20px;
+        }
+
+        .toggle-mobile {
+            display: none;
+          
+            @media (max-width: 768px) {
+              display: flex;
+              flex-direction: column;
+              width: 60px;
+              height: 60px;
+              margin-right: 20px;
+              cursor: pointer;
+          
+              span {
+                background: #000000;
+                border-radius: 10px;
+                height: 7px;
+                margin: 7px 0;
+                transition: .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+              }
+          
+              span:nth-of-type(1) {
+                width: 50%;
+              }
+          
+              span:nth-of-type(2) {
+                width: 100%;
+              }
+          
+              span:nth-of-type(3) {
+                width: 75%;
+              }
+          
+              &.open {
+                span:nth-of-type(1) {
+                  transform-origin: bottom;
+                  transform: rotatez(45deg) translate(8px, 0px)
+                }
+          
+                span:nth-of-type(2) {
+                  transform-origin: top;
+                  transform: rotatez(-45deg)
+                }
+          
+                span:nth-of-type(3) {
+                  transform-origin: bottom;
+                  width: 50%;
+                  transform: translate(30px, -11px) rotatez(45deg);
+                }
+              }
+            }
+          }
+          
+
+        a {
+            color: $primary-link;
+
+            &:hover {
+                color: $primary-link-hover;
+            }
+        }
+
+        .nav-list {
+            display: flex;
+            align-items: center;
+            margin-left: 3rem;
+
+            @media (max-width: 768px) {
+                display: none;
+            }
+
+            &.login {
+                height: 100%;
+
+                .nav-buttons {
+                    -webkit-box-align: center;
+                    align-items: center;
+                    align-self: stretch;
+                    display: flex;
+                    font-size: 1.2rem;
+                    height: 100%;
+                    padding: 0.5rem 1.5rem;
+
+                    &.get-free {
+                        background-color: $primary-btn;
+                        color: $white;
+
+                        &:hover {
+                            background-color: $primary-btn-hover;
+
+                        }
+                    }
+                }
+            }
+
+            .nav-link {
+                margin: 0px 10px;
+                padding: 10px;
+            }
+        }
+    }
+
+    .navbar-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 70vh;
+        width: 100%;
+        padding: 0px 15px;
+        max-height: 0;
+        position: absolute;
+        visibility: hidden;
+        transition: max-height 0.8s ease-out, visibility 0.8s ease-out;
+        overflow: hidden;
+        z-index: 1;
+        background-color: $white;
+
+        @media (min-width: 769px) {
+            display: none;
+        }
+
+        .nav-link {
+            width: 100%;
+            padding: 1rem;
+            margin: 10px 0;
+            border-bottom: 1px solid;
+        }
+
+        .nav-list {
+            &.login {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                margin-bottom: 1rem;
+
+                .nav-buttons {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-size: 1.2rem;
+                    padding: 0.5rem 1.5rem;
+
+                    &.get-free {
+                        background-color: $primary-btn;
+                        color: $white;
+
+                        &:hover {
+                            background-color: $primary-btn-hover;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .navbar-content.open {
+        max-height: 70vh;
+        visibility: visible;
+    }
+}

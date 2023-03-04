@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './User.scss';
-import Icon from '../icon/icon';
+import Icon from '@components/Icon/Icon';
 import userNavItems from './conf/userNavItems';
 
 const User = (props) => {
