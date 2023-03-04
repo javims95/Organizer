@@ -4,14 +4,7 @@ import LoggedIn from './LoggedIn/LoggedIn';
 import LoggedOut from './LogeedOut/LogeedOut';
 
 const Navbar = () => {
-    const isLogged = false;
-    // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-    // useEffect(() => {
-    //     const handleResize = () => setWindowWidth(window.innerWidth);
-    //     window.addEventListener('resize', handleResize);
-    //     return () => window.removeEventListener('resize', handleResize);
-    // }, []);
+    const isLogged = true;
 
     useEffect(() => {
         if (isLogged) {

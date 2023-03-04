@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Home from './pages/Home/Home'
-import Calendar from './pages/Calendar'
+import Calendar from './pages/Calendar/Calendar'
 
 export default function App() {
     return (
@@ -10,7 +10,7 @@ export default function App() {
             <header>
                 <Navbar/>
             </header>
-            <main>
+            <main className="content">
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/calendar" element={<Calendar />} />
