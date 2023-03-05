@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-const Icon = ({ icon, width, height, className }) => {
+const Icon = ({ icon, color, width, height, className }) => {
     const [svg, setSvg] = useState(null);
     const [viewBox, setViewBox] = useState(null);
-    const optionalProps = { className, width, height, };
-    const props = Object.fromEntries(
-        Object.entries(optionalProps).filter(([_, value]) => value != null)
-    );
+    const optionalProps = { width, height, className };
+    const props = {
+        ...optionalProps,
+        fill: color,
+    };
 
     useEffect(() => {
         fetch('icons.svg')
@@ -20,7 +21,7 @@ const Icon = ({ icon, width, height, className }) => {
                     setViewBox(match[1]);
                 }
             });
-    }, [icon, width, height, className]);
+    }, [icon, color, width, height, className]);
 
     return svg ? (
         <svg viewBox={viewBox} {...props}>

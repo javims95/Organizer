@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Home from './pages/Home/Home'
-import Calendar from './pages/Calendar/Calendar'
+import Calendar from './components/Calendar/Calendar'
 
 export default function App() {
     return (

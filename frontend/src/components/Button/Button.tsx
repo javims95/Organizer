@@ -2,16 +2,16 @@ import React from 'react';
 import './Button.scss';
 
 interface ButtonVM {
-    id: string;
+    id?: string;
     text: string;
-    classname?: string;
+    className?: string;
     link?: string | (() => void);
     borderRadius?: boolean;
 }
 
 const Button = (props: ButtonVM) => {
 
-    const { id, text, classname, link, borderRadius } = props;
+    const { id, text, className, link, borderRadius } = props;
 
     const handleOnClick = () => {
         if (typeof link === "string") {
@@ -25,7 +25,7 @@ const Button = (props: ButtonVM) => {
         <>
             <button
                 id={id}
-                className={`button ${classname ? classname : ''}`}
+                className={`btn ${className ? className : ''}`}
                 onClick={handleOnClick}
             >
                 {text}

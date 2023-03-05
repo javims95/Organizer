@@ -9,7 +9,7 @@ interface InputVM {
     placeholder?: string;
     borderRadius?: boolean;
     value?: string;
-    isValid: boolean;
+    isValid?: boolean;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -76,7 +76,7 @@ const Input: React.FC<InputVM> = (props: InputVM) => {
     return (
         <input
             id={values.id}
-            className={`input ${values.classname ? values.classname : ''} ${values.borderRadius ? 'border-radius' : ''} ${!values.isValid ? 'invalid' : ''}`}
+            className={`form-control ${values.classname ? values.classname : ''} ${values.borderRadius ? 'border-radius' : ''} ${!values.isValid ? 'invalid' : ''}`}
             type={values.type}
             placeholder={values.placeholder}
             value={values.value}
