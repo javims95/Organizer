@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './Input.scss';
 import { REemail, REnumber, REalpha, REalphanumeric, REdecimal } from '@utils/regex';
 
@@ -13,10 +13,10 @@ interface InputVM {
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+    inputRef?: React.RefObject<HTMLInputElement>;
 }
 
-const Input: React.FC<InputVM> = (props: InputVM) => {
-
+const Input = React.forwardRef<HTMLInputElement, InputVM>((props, ref) => {
     // const { id, classname, type, placeholder, borderRadius, value, isValid } = props;
 
     const [values, setValues] = useState<InputVM>({
@@ -83,8 +83,9 @@ const Input: React.FC<InputVM> = (props: InputVM) => {
             onChange={handleInputChange}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
+            ref={ref}
         />
     );
-};
+});
 
 export default Input;

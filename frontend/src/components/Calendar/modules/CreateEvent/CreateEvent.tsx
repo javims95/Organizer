@@ -3,9 +3,10 @@ import colors from '../../conf/colors';
 import Icon from '@components/Icon/Icon';
 import { Draggable } from '@fullcalendar/interaction';
 import Input from '@components/Input/Input';
+import Button from '@components/Button/Button';
 
 const CreateEvent: React.FC = () => {
-    const [selectedColor, setSelectedColor] = useState('');
+    const [selectedColor, setSelectedColor] = useState('rgb(0, 123, 255)');
     const [eventTitle, setEventTitle] = useState('');
     const eventInputRef = useRef<HTMLInputElement>(null);
 
@@ -38,8 +39,8 @@ const CreateEvent: React.FC = () => {
                 },
             });
 
-            setEventTitle('');
-            setSelectedColor('');
+            // setEventTitle('');
+            // setSelectedColor('');
         }
     };
 
@@ -61,7 +62,7 @@ const CreateEvent: React.FC = () => {
                                 <i className="fas fa-square"></i>
                             </a>
                         </li>
-                        {colors.map((color) => (
+                        {colors.map((color: string) => (
                             <a key={color} onClick={() => handleColorSelect(color)}>
                                 <Icon icon={'square'} color={color} className="icon-event" />
                             </a>
@@ -69,33 +70,22 @@ const CreateEvent: React.FC = () => {
                     </ul>
                 </div>
                 <div className="input-group">
-                    <input
-                        id="new-event"
-                        type="text"
-                        className="form-control"
-                        placeholder="Event Title"
-                        value={eventTitle}
-                        onChange={handleTitleChange}
-                        ref={eventInputRef}
-                    />
-                    {/* <Input
+                    <Input
                         id='new-event'
                         type='alphanumeric'
                         placeholder='Título del evento'
                         value={eventTitle}
                         onChange={handleTitleChange}
                         ref={eventInputRef}
-                    /> */}
-                    <div className="input-group-append">
-                        <button
-                            id="add-new-event"
-                            type="button"
-                            className="btn btn-blue"
+                    />
+                    <div className="input-group-append">                        
+                        <Button
+                            id='add-new-event'
+                            className='btn-blue'
                             style={{ backgroundColor: selectedColor, borderColor: selectedColor }}
                             onClick={handleAddEventClick}
-                        >
-                            Añadir
-                        </button>
+                            text='Añadir'
+                        />
                     </div>
                 </div>
             </div>

@@ -5,19 +5,20 @@ interface ButtonVM {
     id?: string;
     text: string;
     className?: string;
-    link?: string | (() => void);
     borderRadius?: boolean;
+    style?: React.CSSProperties;
+    onClick?: String | (() => void);
 }
 
 const Button = (props: ButtonVM) => {
 
-    const { id, text, className, link, borderRadius } = props;
+    const { id, text, className, borderRadius, style, onClick } = props;
 
     const handleOnClick = () => {
-        if (typeof link === "string") {
-            window.location.href = link;
-        } else if (typeof link === "function") {
-            link();
+        if (typeof onClick === "string") {
+            window.location.href = onClick;
+        } else if (typeof onClick === "function") {
+            onClick();
         }
     };
 
@@ -26,6 +27,7 @@ const Button = (props: ButtonVM) => {
             <button
                 id={id}
                 className={`btn ${className ? className : ''}`}
+                style={style}
                 onClick={handleOnClick}
             >
                 {text}
