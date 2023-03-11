@@ -14,7 +14,7 @@ const DraggableEvents = () => {
 
             const eventObject = {
                 title: externalEvent.innerText.trim(),
-                // Añadir el background-color
+                backgroundColor: '#000000',
             };
 
             externalEvent.dataset.eventObject = JSON.stringify(eventObject);

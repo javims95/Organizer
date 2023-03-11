@@ -8,7 +8,7 @@ type ModalProps = {
     isOpen: boolean;
     setIsOpen: (value: boolean) => void;
 };
-
+// ARREGLAR MODAL MÓVILES, FALLO POR CONSOLA
 const Modal: React.FC<ModalProps> = (props) => {
 
     const { title, children, isOpen, setIsOpen } = props;
@@ -25,6 +25,7 @@ const Modal: React.FC<ModalProps> = (props) => {
 
     return (
         <>
+        {console.log(isOpen)}
             {show && (
                 <div className="modal" onClick={handleClose}>
                     <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>

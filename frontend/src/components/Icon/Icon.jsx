@@ -21,6 +21,10 @@ const Icon = ({ icon, color, width, height, className }) => {
                     setViewBox(match[1]);
                 }
             });
+        return () => {
+            setSvg({});
+            setViewBox({});
+        }
     }, [icon, color, width, height, className]);
 
     return svg ? (
