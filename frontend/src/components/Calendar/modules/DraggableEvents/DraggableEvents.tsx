@@ -11,7 +11,6 @@ const DraggableEvents = () => {
         for (let index = 0; index < externalEvents.length; index++) {
             const externalEvent = externalEvents[index] as HTMLElement;
 
-
             const eventObject = {
                 title: externalEvent.innerText.trim(),
                 backgroundColor: '#000000',

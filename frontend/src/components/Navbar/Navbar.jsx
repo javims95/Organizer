@@ -7,6 +7,7 @@ const Navbar = () => {
     const isLogged = true;
 
     useEffect(() => {
+        // Arreglar classicNameResolver, en móviles el menú debe estar collapsado y mas pequeño
         if (isLogged) {
             document.body.classList.add('nav-expanded-NT');
         } else {

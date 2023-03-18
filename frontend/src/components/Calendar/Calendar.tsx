@@ -11,6 +11,7 @@ import CreateEventModal from './modules/modals/CreateEventModal';
 const CalendarComponent: React.FC = () => {
     const calendarRef = useRef(null);
     const [showModal, setShowModal] = useState(false);
+    const [startDate, setStartDate] = useState(null);
 
     const handleDrop = (dropInfo: any) => {
         const { draggedEl } = dropInfo;
@@ -21,6 +22,7 @@ const CalendarComponent: React.FC = () => {
     };
 
     const handleDateClick = (e: any) => {
+        setStartDate(e.date)        
         setShowModal(true);
     };
 
@@ -65,6 +67,7 @@ const CalendarComponent: React.FC = () => {
                 title='Crear nuevo evento'
                 isOpen={showModal}
                 setIsOpen={handleCloseModal}
+                startDate={startDate}
             />
         </div>
     );

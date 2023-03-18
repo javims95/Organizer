@@ -6,21 +6,46 @@ interface CheckboxVM {
     className?: string;
     text?: string;
     link?: string;
+    checked?: boolean;
+    onChange?: (checked: boolean) => void; // Agregar onChange a los props
 }
 
 const Checkbox = (props: CheckboxVM) => {
-    const { id, text, className, link } = props;
+    const { id, text, className, link, checked, onChange } = props;
+
+    const [isChecked, setIsChecked] = React.useState<boolean>(checked || false);
+
+    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newChecked = event.target.checked;
+        setIsChecked(newChecked);
+        if (onChange) {
+            onChange(newChecked); // Llamar a la función onChange si está definida
+        }
+    }
+
     if (!link) {
         return (
             <div className='form-check'>
-                <input className={className} type="checkbox" id={id} />
+                <input
+                    className={className}
+                    type="checkbox"
+                    id={id}
+                    defaultChecked={isChecked ? true : false}
+                    onChange={handleOnChange}
+                />
                 <label htmlFor={id}>{text}</label>
             </div>
         );
     } else {
         return (
             <div className='form-check'>
-                <input className={className} type="checkbox" id={id} />
+                <input
+                    className={className}
+                    type="checkbox"
+                    id={id}
+                    defaultChecked={isChecked ? true : false}
+                    onChange={handleOnChange}
+                />
                 <a href={link}>{text}</a>
             </div>
         )
