@@ -1,4 +1,6 @@
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = {
     entry: './src/index.js',
@@ -39,6 +41,9 @@ module.exports = {
             '@utils': path.resolve(__dirname, 'src/utils'),
             '@styles': path.resolve(__dirname, 'src/styles'),
             '@assets': path.resolve(__dirname, 'src/assets'),
+            '@interfaces': path.resolve(__dirname, 'src/interfaces'),
+            '@services': path.resolve(__dirname, 'src/services'),
+            '@hooks': path.resolve(__dirname, 'src/hooks'),
         },
     },
     mode: 'development',

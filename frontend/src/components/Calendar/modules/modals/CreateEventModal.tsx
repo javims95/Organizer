@@ -1,107 +1,201 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Input from '@components/Input/Input';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import Modal from '@components/Modal/Modal';
-import Checkbox from '@components/Checkbox/Checkbox';
-import RangeTimePicker from '@components/RangeTimePicker/RangeTimePicker';
+import React, { useEffect, useState } from 'react';
+import './CreateEventModal.scss'
+import { CalendarApi } from '@fullcalendar/react';
+import { toast } from 'react-toastify';
 
-interface ModalProps {
-    title: string;
-    isOpen: boolean;
-    startDate?: Date | null;
-    endDate?: Date | null;
-    setIsOpen: () => void;
+import Icon from '@components/Icon/Icon';
+import Input from '@components/Input/Input';
+import { BackgroundColorRounded, BoxContainer, SelectColors } from './styles';
+import {
+    createEventCalendar,
+    deleteEventCalendar,
+    updateEventCalendar,
+} from '@services/eventCalendarApi';
+import { IsMobile } from '@utils/Environment/IsMobile';
+import colors from '../../conf/colors'
+
+interface ICardColor {
+    backgroundColor: string;
+    textColor: string;
 }
 
-const CreateEventModal: React.FC<ModalProps> = ({ title, isOpen, startDate: propsStartDate, endDate: propsEndDate, setIsOpen }) => {
-    const [dateRange, setDateRange] = useState([null, null]);
-    const [startDateRange, endDateRange] = dateRange;
-    const [allDay, setAllDay] = useState(true);
-    const [startDate, setStartDate] = useState(new Date());
-    const [color, setColor] = useState('#ff0000');
-    const [formData, setFormData] = useState({});
+interface IModalInfosEventCalendaryProps {
+    open: boolean;
+    handleClose: () => void;
+    eventInfos: any;
+    isEditCard: boolean;
+}
+
+export const ModalInfosEventCalendar = ({
+    handleClose,
+    open,
+    eventInfos,
+    isEditCard,
+}: IModalInfosEventCalendaryProps) => {
+    const [title, setTitle] = useState<string>('');
+    const [cardColor, setCardColor] = useState<ICardColor>({
+        backgroundColor: '#039be5',
+        textColor: '#ffffff',
+    });
+
+    // Ordenar
+    type ColorsCard = {
+        backgroundColor: string;
+        textColor: string;
+    };
+
+    const ListColorsCard: ColorsCard[] = [
+        { backgroundColor: '#007bff', textColor: '#ffffff' },
+        { backgroundColor: '#0dcaf0', textColor: '#ffffff' },
+        { backgroundColor: '#fd7e14', textColor: '#ffffff' },
+        { backgroundColor: '#ffc107', textColor: '#000000' },
+        { backgroundColor: '#28a745', textColor: '#ffffff' },
+        { backgroundColor: '#20c997', textColor: '#ffffff' },
+        { backgroundColor: '#dc3545', textColor: '#ffffff' },
+        { backgroundColor: '#d63384', textColor: '#ffffff' },
+        { backgroundColor: '#6610f2', textColor: '#ffffff' },
+        { backgroundColor: '#6c757d', textColor: '#ffffff' },
+    ];
 
     useEffect(() => {
-        if (propsStartDate && propsEndDate) {
-            setDateRange([propsStartDate, propsEndDate]);
-        } else if (propsStartDate) {
-            setDateRange([propsStartDate, propsStartDate]);
-        }
-    }, [propsStartDate, propsEndDate]);
-
-    const handleTimeRangeChange = (start: Date | null, end: Date | null) => {
-        // Arreglar función vacía
-    };
-    const handleColorChange = (event) => {
-        setColor(event.target.value);
-    };
-
-    // Recoger datos del formulario
-    const handleSubmit = () => {
-        let dataForm: object;
-        const title = (document.getElementById('title-new-event') as HTMLInputElement).value || '';
-        const color = (document.getElementById('color-new-event') as HTMLInputElement).value || '';
-        
-        if (allDay) {
-            dataForm = {
-                title: title,
-                startDateRange: startDateRange,
-                endDateRange: endDateRange,
-                color: color
-            }
+        if (isEditCard) {
+            setTitle(eventInfos?.event?.title);
+            setCardColor({
+                backgroundColor: eventInfos?.event?.backgroundColor,
+                textColor: eventInfos?.event?.textColor,
+            });
         } else {
-            const date = (document.getElementById('date-new-event') as HTMLInputElement).value || '';
-            const startTime = (document.getElementById('start-time-picker') as HTMLInputElement).value || '';
-            const endTime = (document.getElementById('end-time-picker') as HTMLInputElement).value || '';
-
-            dataForm = {
-                title: title,
-                date: date,
-                startTime: startTime,
-                endTime: endTime,
-                color: color
-            }
+            setTitle('');
+            setCardColor({ backgroundColor: '#039be5', textColor: '#ffffff' });
         }
-        setFormData(dataForm);
-        console.log(formData);
+    }, [eventInfos, isEditCard]);
+
+    const handleSelectCardColor = (color: ColorsCard) => {
+        setCardColor({
+            backgroundColor: color.backgroundColor,
+            textColor: color.textColor,
+        });
     };
+
+    const handleAddedEvent = async () => {
+        try {
+            const calendarApi: CalendarApi = eventInfos.view.calendar;
+
+            const eventCalendar = await createEventCalendar({
+                eventCalendar: {
+                    title: title === '' ? 'Sem título' : title,
+                    start: eventInfos.startStr,
+                    end: eventInfos.endStr,
+                    backgroundColor: cardColor.backgroundColor,
+                    textColor: cardColor.textColor,
+                },
+            });
+
+            calendarApi.addEvent({
+                id: eventCalendar._id,
+                title: eventCalendar.title,
+                start: eventCalendar.start,
+                end: eventCalendar.endStr,
+                backgroundColor: cardColor.backgroundColor,
+                textColor: cardColor.textColor,
+            });
+        } catch (err) {
+            toast.error('Houve um erro ao criar um evento');
+        } finally {
+            setTitle('');
+            handleClose();
+        }
+    };
+
+    const handleDeleteEvent = async () => {
+        try {
+            await deleteEventCalendar({ id: eventInfos.event.id });
+            eventInfos.event.remove();
+        } catch (error) {
+            toast.error('Houve um erro ao deletar o evento');
+        } finally {
+            setTitle('');
+            handleClose();
+        }
+    };
+
+    const handleUpdatedEvent = async () => {
+        try {
+            const calendarApi: CalendarApi = eventInfos.view.calendar;
+
+            const eventCalendarUpdated = {
+                eventCalendar: {
+                    _id: eventInfos.event.id,
+                    title: title !== '' ? title : 'Sem título',
+                    start: eventInfos.event.startStr,
+                    end: eventInfos.event.endStr,
+                    backgroundColor: cardColor.backgroundColor,
+                    textColor: cardColor.textColor,
+                },
+            };
+
+            const currentEvent = calendarApi.getEventById(eventInfos.event.id);
+
+            if (currentEvent) {
+                currentEvent.setProp('title', title !== '' ? title : 'Sem título');
+                currentEvent.setProp('backgroundColor', cardColor.backgroundColor);
+                currentEvent.setProp('textColor', cardColor.textColor);
+            }
+
+            await updateEventCalendar(eventCalendarUpdated);
+        } catch (error) {
+            toast.error('Houve um erro ao atualizar o evento');
+        } finally {
+            setTitle('');
+            handleClose();
+        }
+    };
+
+    // Modal
+    if (!open) {
+        return null;
+    }
 
     return (
-        <Modal title={title} isOpen={isOpen} setIsOpen={setIsOpen} footer btnContinue='Guardar' btnCancel='Cerrar' onContinue={handleSubmit} >
-            <form>
-                <div className='input-form-modal'>
-                    <Input id='title-new-event' type='alphanumber' placeholder='Añade un título' />
-                </div>
-                <div className="input-form-modal">
-                    {allDay ? (
-                        <DatePicker
-                            id='date-range-new-event'
-                            selectsRange={true}
-                            startDate={startDateRange}
-                            endDate={endDateRange}
-                            dateFormat="dd/MM/yyyy"
-                            locale="es"
-                            onChange={(update) => {
-                                setDateRange(update as any);
-                            }}
-                            isClearable={true}
-                        />
-                    ) : (
-                        <div className='range-time-picker remove-border'>
-                            <DatePicker className='not-border fix-width date-new-event' selected={startDate} onChange={(date) => setStartDate(date)} />
-                            <RangeTimePicker className='not-border time-new-event' onChange={handleTimeRangeChange} />
+        <div
+            className="create-event-modal"
+            onClick={IsMobile() ? undefined : handleClose}
+            onTouchEnd={!IsMobile() ? undefined : handleClose}
+        >
+            <div
+                className="modal-dialog"
+                onClick={IsMobile() ? undefined : (e) => e.stopPropagation()}
+                onTouchEnd={!IsMobile() ? undefined : (e) => e.stopPropagation()}
+            >
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h1 className="modal-title fs-5">Modal title</h1>
+                        <button
+                            type="button"
+                            className="btn-close"
+                            onClick={IsMobile() ? undefined : handleClose}
+                            onTouchEnd={!IsMobile() ? undefined : handleClose}
+                        >
+                            <Icon icon='xmark' className='svg-close' />
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                        {/* Terminar todos los elementos de la modal, colores, checkbox (allDay) */}
+                        <Input placeholder='Inserte un título' value={title} onChange={(e) => setTitle(e.target.value)} />
+                        <div className='create-event-colors'>
+                            {colors.map((color: string) => (
+                                <a key={color} >
+                                    <Icon icon={'square'} color={color} className="select-colors" />
+                                </a>
+                            ))}
                         </div>
-
-                    )}
-                    <Checkbox id='all-day' text='Todo el día' checked={allDay} onChange={() => setAllDay(!allDay)} />
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary">Close</button>
+                        <button type="button" className="btn btn-primary">Save changes</button>
+                    </div>
                 </div>
-                <div className='input-form-modal'>
-                    <input id='color-new-event' type="color" value={color} onChange={handleColorChange} />
-                </div>
-            </form>
-        </Modal>
+            </div>
+        </div>
     );
 };
-
-export default CreateEventModal;

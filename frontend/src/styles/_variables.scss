@@ -3,6 +3,7 @@ $white: #fff;
 $black: #000;
 $blue-light: #00b9eb;
 $main-bg: #f4f6f9;
+$color-text: #212529;
 
 // Primary nav
 $nav-text-link: #bebfc0;
@@ -28,6 +29,9 @@ $primary-link-hover: #0065ff;
 
 // Danger
 $danger-color: rgb(220 53 69 / 65%);
+
+// Modal
+$border-modal: #cfd1d2;
 
 // Icons
 $alert-icon: '<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';

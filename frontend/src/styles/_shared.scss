@@ -82,6 +82,13 @@
     }
 }
 
+.col-md-12 {
+    @media (min-width: 769px) {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}
+
 .col-md-9 {
     @media (min-width: 769px) {
         -ms-flex: 0 0 75%;

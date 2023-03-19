@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
-import colors from '../../conf/colors';
-import Icon from '@components/Icon/Icon';
 import { Draggable } from '@fullcalendar/interaction';
+
+import Icon from '@components/Icon/Icon';
 import Input from '@components/Input/Input';
 import Button from '@components/Button/Button';
+import colors from '../../conf/colors';
 
 const CreateEvent: React.FC = () => {
     const [selectedColor, setSelectedColor] = useState('rgb(0, 123, 255)');
