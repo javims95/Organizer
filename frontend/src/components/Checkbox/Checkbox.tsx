@@ -7,7 +7,7 @@ interface CheckboxVM {
     text?: string;
     link?: string;
     checked?: boolean;
-    onChange?: (checked: boolean) => void; // Agregar onChange a los props
+    onChange?: (checked: boolean) => void;
 }
 
 const Checkbox = (props: CheckboxVM) => {
@@ -19,7 +19,7 @@ const Checkbox = (props: CheckboxVM) => {
         const newChecked = event.target.checked;
         setIsChecked(newChecked);
         if (onChange) {
-            onChange(newChecked); // Llamar a la función onChange si está definida
+            onChange(newChecked);
         }
     }
 

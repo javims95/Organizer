@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-const Icon = ({ icon, color, width, height, className }) => {
-    const [svg, setSvg] = useState(null);
-    const [viewBox, setViewBox] = useState(null);
-    const optionalProps = { width, height, className };
+type IconProps = {
+    icon: string;
+    color?: string;
+    width?: string;
+    height?: string;
+    className?: string;
+    style?: React.CSSProperties;
+};
+
+const Icon: React.FC<IconProps> = ({ icon, color, width, height, className, style }) => {
+    const [svg, setSvg] = useState<string | null>(null);
+    const [viewBox, setViewBox] = useState<string | null>(null);
+    const optionalProps = { width, height, className, style, color };
     const props = {
         ...optionalProps,
         fill: color,
@@ -22,8 +31,8 @@ const Icon = ({ icon, color, width, height, className }) => {
                 }
             });
         return () => {
-            setSvg({});
-            setViewBox({});
+            setSvg(null);
+            setViewBox(null);
         }
     }, [icon, color, width, height, className]);
 

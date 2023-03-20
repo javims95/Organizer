@@ -4,7 +4,7 @@ import { REemail, REnumber, REalpha, REalphanumeric, REdecimal } from '@utils/re
 
 interface InputVM {
     id?: string;
-    classname?: string;
+    className?: string;
     type?: string;
     placeholder?: string;
     borderRadius?: boolean;
@@ -21,7 +21,7 @@ const Input = React.forwardRef<HTMLInputElement, InputVM>((props, ref) => {
 
     const [values, setValues] = useState<InputVM>({
         id: props.id || '',
-        classname: props.classname || '',
+        className: props.className || '',
         type: props.type || '',
         placeholder: props.placeholder || '',
         borderRadius: props.borderRadius || false,
@@ -76,7 +76,7 @@ const Input = React.forwardRef<HTMLInputElement, InputVM>((props, ref) => {
     return (
         <input
             id={values.id}
-            className={`form-control ${values.classname ? values.classname : ''} ${values.borderRadius ? 'border-radius' : ''} ${!values.isValid ? 'invalid' : ''}`}
+            className={`form-control${values.className ? ` ${values.className}` : ''}${values.borderRadius ? ' border-radius' : ''}${!values.isValid ? ' invalid' : ''}`}
             type={values.type}
             placeholder={values.placeholder}
             value={values.value}

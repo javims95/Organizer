@@ -13,5 +13,19 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .time-separator {
-    margin: 0 4px;
+    margin: 0 3px;
+}
+
+#start-time-picker, #end-time-picker {
+    font-size: 15px;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+
+    &:hover {
+        background-color: #2021240a;
+    }
+}
+
+#start-time-picker {
+    margin-left: 16px;
 }

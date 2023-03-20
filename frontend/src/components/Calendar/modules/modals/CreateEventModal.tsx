@@ -2,17 +2,15 @@ import React, { useEffect, useState } from 'react';
 import './CreateEventModal.scss'
 import { CalendarApi } from '@fullcalendar/react';
 import { toast } from 'react-toastify';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 import Icon from '@components/Icon/Icon';
 import Input from '@components/Input/Input';
-import { BackgroundColorRounded, BoxContainer, SelectColors } from './styles';
-import {
-    createEventCalendar,
-    deleteEventCalendar,
-    updateEventCalendar,
-} from '@services/eventCalendarApi';
+import { createEventCalendar, deleteEventCalendar, updateEventCalendar, } from '@services/eventCalendarApi';
 import { IsMobile } from '@utils/Environment/IsMobile';
-import colors from '../../conf/colors'
+import Checkbox from '@components/Checkbox/Checkbox';
+import RangeTimePicker from '@components/RangeTimePicker/RangeTimePicker';
 
 interface ICardColor {
     backgroundColor: string;
@@ -26,25 +24,16 @@ interface IModalInfosEventCalendaryProps {
     isEditCard: boolean;
 }
 
-export const ModalInfosEventCalendar = ({
-    handleClose,
-    open,
-    eventInfos,
-    isEditCard,
-}: IModalInfosEventCalendaryProps) => {
+export const ModalInfosEventCalendar = ({ handleClose, open, eventInfos, isEditCard, }: IModalInfosEventCalendaryProps) => {
     const [title, setTitle] = useState<string>('');
     const [cardColor, setCardColor] = useState<ICardColor>({
         backgroundColor: '#039be5',
         textColor: '#ffffff',
     });
+    const [startDate, setStartDate] = useState(new Date("2014/02/08"));
+    const [endDate, setEndDate] = useState(new Date("2014/02/10"));
 
-    // Ordenar
-    type ColorsCard = {
-        backgroundColor: string;
-        textColor: string;
-    };
-
-    const ListColorsCard: ColorsCard[] = [
+    const ListColorsCard: ICardColor[] = [
         { backgroundColor: '#007bff', textColor: '#ffffff' },
         { backgroundColor: '#0dcaf0', textColor: '#ffffff' },
         { backgroundColor: '#fd7e14', textColor: '#ffffff' },
@@ -68,9 +57,14 @@ export const ModalInfosEventCalendar = ({
             setTitle('');
             setCardColor({ backgroundColor: '#039be5', textColor: '#ffffff' });
         }
+        if (eventInfos) {
+            setStartDate(eventInfos.start);
+            setEndDate(eventInfos.end)
+        }
+
     }, [eventInfos, isEditCard]);
 
-    const handleSelectCardColor = (color: ColorsCard) => {
+    const handleSelectCardColor = (color: ICardColor) => {
         setCardColor({
             backgroundColor: color.backgroundColor,
             textColor: color.textColor,
@@ -151,10 +145,17 @@ export const ModalInfosEventCalendar = ({
         }
     };
 
+    // Checkbox
+    const [isAllDay, setIsAllDay] = useState(true);
+    const handleCheckboxChange = (event) => {
+        setIsAllDay(event);
+    };
+
     // Modal
     if (!open) {
         return null;
     }
+
 
     return (
         <div
@@ -180,14 +181,62 @@ export const ModalInfosEventCalendar = ({
                         </button>
                     </div>
                     <div className="modal-body">
-                        {/* Terminar todos los elementos de la modal, colores, checkbox (allDay) */}
-                        <Input placeholder='Inserte un título' value={title} onChange={(e) => setTitle(e.target.value)} />
-                        <div className='create-event-colors'>
-                            {colors.map((color: string) => (
-                                <a key={color} >
-                                    <Icon icon={'square'} color={color} className="select-colors" />
-                                </a>
-                            ))}
+                        <div className='form'>
+                            <Input placeholder='Inserte un título' value={title} onChange={(e) => setTitle(e.target.value)} />
+                        </div>
+                        <div className="form form__datepicker form-control">
+                            {isAllDay ? (
+                                <>
+                                    <DatePicker
+                                        className='not-border'
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        selectsStart
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        dateFormat='dd/MM/yyyy'
+                                    />
+                                    <span className='separator'>—</span>
+                                    <DatePicker
+                                        className='not-border'
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        selectsEnd
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        minDate={startDate}
+                                        dateFormat='dd/MM/yyyy'
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <DatePicker
+                                        className='not-border'
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        dateFormat='dd/MM/yyyy'
+                                    />
+                                    <RangeTimePicker />
+                                </>
+                            )}
+                        </div>
+                        <Checkbox id='allDay' text='Todo el día' checked={isAllDay} onChange={handleCheckboxChange} />
+                        <div className='form'>
+                            <span className='label'>Seleccione el color del evento</span>
+                            <div className='create-event-colors'>
+                                {ListColorsCard.map((color: ICardColor, index) => (
+                                    <a key={index} onClick={() => handleSelectCardColor(color)} >
+                                        <Icon
+                                            icon={'square'}
+                                            color={color.backgroundColor}
+                                            className="select-colors"
+                                            style={{
+                                                stroke: cardColor?.backgroundColor === color.backgroundColor ? '#000000' : '',
+                                            }}
+                                        />
+                                    </a>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <div className="modal-footer">

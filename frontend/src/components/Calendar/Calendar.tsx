@@ -28,7 +28,7 @@ const Calendar = () => {
     const handleAddEventSelectAndOpenModal = (selectInfo: any) => {
         setIsEditCard(false);
         setEventInfos(selectInfo);
-        console.log(selectInfo);
+        // console.log(selectInfo);
 
         modalInfosEvent.handleOpen();
     };

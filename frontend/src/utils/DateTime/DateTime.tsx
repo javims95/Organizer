@@ -1,4 +1,4 @@
-export const getDate = (amount: number = 0, unit: string = 'd'): Date => {
+export const getDate = (amount: number = 0, unit: string = 'd',  rounded: boolean = false): Date => {
     const now = new Date();
     let newDate = new Date(now);
 
@@ -23,6 +23,13 @@ export const getDate = (amount: number = 0, unit: string = 'd'): Date => {
             break;
         default:
             throw new Error(`Invalid unit '${unit}'`);
+    }
+
+    if (rounded) {
+        const minute = newDate.getMinutes();
+        const roundedMinute = Math.round(minute / 15) * 15;
+        newDate.setMinutes(roundedMinute);
+        newDate.setSeconds(0);
     }
 
     return newDate;

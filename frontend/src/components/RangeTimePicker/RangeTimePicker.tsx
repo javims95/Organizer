@@ -4,32 +4,31 @@ import { getDate } from '@utils/DateTime/DateTime';
 
 interface RangeTimePickerVM {
     className?: string;
-    onChange: (start: Date, end: Date) => void;
 }
 
 const RangeTimePicker = (props: RangeTimePickerVM) => {
-    const { className, onChange } = props;
+    const { className } = props;
 
-    const [startTime, setStartTime] = useState(getDate());
-    const [endTime, setEndTime] = useState(getDate(1, 'h'));
+    const [startTime, setStartTime] = useState(getDate(undefined, undefined, true));
+    const [endTime, setEndTime] = useState(getDate(1, 'h', true));
 
-    const handleStartTimeChange = (date: Date | null) => {
+    const handleStartTimeChange = (date: string | null) => {
         if (date) {
-            setStartTime(date);
-            if (date > endTime) {
-                setEndTime(date);
-            }
-            onChange(date, endTime);
+            const [hours, minutes] = date.split(':');
+            const newStartTime = new Date(startTime.getTime());
+            newStartTime.setHours(Number(hours));
+            newStartTime.setMinutes(Number(minutes));
+            setStartTime(newStartTime);
         }
     };
 
-    const handleEndTimeChange = (date: Date | null) => {
+    const handleEndTimeChange = (date: string | null) => {
         if (date) {
-            setEndTime(date);
-            if (date < startTime) {
-                setStartTime(date);
-            }
-            onChange(startTime, date);
+            const [hours, minutes] = date.split(':');
+            const newEndTime = new Date(endTime.getTime());
+            newEndTime.setHours(Number(hours));
+            newEndTime.setMinutes(Number(minutes));
+            setEndTime(newEndTime);
         }
     };
 
@@ -40,7 +39,7 @@ const RangeTimePicker = (props: RangeTimePickerVM) => {
                 className={className}
                 type="time"
                 value={startTime.toTimeString().slice(0, 5)}
-                onChange={(e) => handleStartTimeChange(new Date(`1970-01-01T${e.target.value}:00Z`))}
+                onChange={(e) => handleStartTimeChange(e.target.value)}
             />
             <span className='time-separator'>-</span>
             <input
@@ -48,7 +47,7 @@ const RangeTimePicker = (props: RangeTimePickerVM) => {
                 className={className}
                 type="time"
                 value={endTime.toTimeString().slice(0, 5)}
-                onChange={(e) => handleEndTimeChange(new Date(`1970-01-01T${e.target.value}:00Z`))}
+                onChange={(e) => handleEndTimeChange(e.target.value)}
             />
         </>
     );
