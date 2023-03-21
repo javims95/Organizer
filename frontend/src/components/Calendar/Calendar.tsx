@@ -5,11 +5,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-import { ModalInfosEventCalendar } from "./modules/modals/CreateEventModal";
+import { ModalInfoEvent } from "./modules/modals/ModalInfoEvent";
 import { useDisclosure } from "@hooks/useDiscloure";
-import { updateEventCalendar } from "@services/eventCalendarApi";
 import { toast } from "react-toastify";
-import { getAllEventsCalendar } from '@services/eventCalendarApi';
+import { getAllEventsCalendar, updateEventCalendar } from '@services/eventCalendarApi';
 import DraggableEvents from './modules/DraggableEvents/DraggableEvents';
 import CreateEvent from './modules/CreateEvent/CreateEvent';
 import { IsMobile } from './../../utils/Environment/IsMobile';
@@ -28,8 +27,6 @@ const Calendar = () => {
     const handleAddEventSelectAndOpenModal = (selectInfo: any) => {
         setIsEditCard(false);
         setEventInfos(selectInfo);
-        // console.log(selectInfo);
-
         modalInfosEvent.handleOpen();
     };
 
@@ -90,7 +87,6 @@ const Calendar = () => {
                         dayMaxEvents={true}
                         allDaySlot={false}
                         editable={true}
-                        // height="700px"
                         buttonText={{
                             today: "Hoy",
                             month: "Mes",
@@ -102,7 +98,7 @@ const Calendar = () => {
                 </div>
             </div>
 
-            <ModalInfosEventCalendar
+            <ModalInfoEvent
                 open={modalInfosEvent.isOpen}
                 handleClose={modalInfosEvent.handleClose}
                 eventInfos={eventInfos}

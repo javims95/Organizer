@@ -130,20 +130,8 @@ $secondary: #6c757d;
             justify-content: flex-end;
             border-top: 1px solid $border-modal;
 
-            button.btn {
-                margin-left: 10px;
-                padding: 10px 20px;
-                border-radius: 5px;
-                border: 1px solid $secondary;
-                background-color: $white;
-                color: $secondary;
-                font-weight: bold;
-                cursor: pointer;
-
-                &:hover {
-                    background-color: $secondary;
-                    color: $white;
-                }
+            .btn {
+                margin: 0 5px;
             }
         }
     }

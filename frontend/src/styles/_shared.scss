@@ -202,6 +202,11 @@
     background-color: #007bff;
     border-color: #007bff;
     box-shadow: none;
+
+    &:hover {
+        background-color: #0b5ed7;
+        border-color: #0b5ed7;
+    }
 }
 
 .btn-blue-info {
@@ -209,6 +214,11 @@
     background-color: #17a2b8;
     border-color: #17a2b8;
     box-shadow: none;
+
+    &:hover {
+        background-color: #25cff2;
+        border-color: #25cff2;
+    }
 }
 
 .btn-green {
@@ -223,6 +233,11 @@
     background-color: #ffc107;
     border-color: #ffc107;
     box-shadow: none;
+
+    &:hover {
+        background-color: #ffca2c;
+        border-color: #ffca2c;
+    }
 }
 
 .btn-red {
@@ -230,6 +245,11 @@
     background-color: #dc3545;
     border-color: #dc3545;
     box-shadow: none;
+
+    &:hover {
+        background-color: #bb2d3b;
+        border-color: #bb2d3b;
+    }
 }
 
 .btn-grey {
@@ -237,6 +257,11 @@
     background-color: #6c757d;
     border-color: #6c757d;
     box-shadow: none;
+
+    &:hover {
+        background-color: #5c636a;
+        border-color: #5c636a;
+    }
 }
 
 

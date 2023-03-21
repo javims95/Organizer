@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './CreateEventModal.scss'
+import './ModalInfoEvent.scss'
 import { CalendarApi } from '@fullcalendar/react';
 import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
@@ -11,6 +11,7 @@ import { createEventCalendar, deleteEventCalendar, updateEventCalendar, } from '
 import { IsMobile } from '@utils/Environment/IsMobile';
 import Checkbox from '@components/Checkbox/Checkbox';
 import RangeTimePicker from '@components/RangeTimePicker/RangeTimePicker';
+import Button from '@components/Button/Button';
 
 interface ICardColor {
     backgroundColor: string;
@@ -24,7 +25,7 @@ interface IModalInfosEventCalendaryProps {
     isEditCard: boolean;
 }
 
-export const ModalInfosEventCalendar = ({ handleClose, open, eventInfos, isEditCard, }: IModalInfosEventCalendaryProps) => {
+export const ModalInfoEvent = ({ handleClose, open, eventInfos, isEditCard, }: IModalInfosEventCalendaryProps) => {
     const [title, setTitle] = useState<string>('');
     const [cardColor, setCardColor] = useState<ICardColor>({
         backgroundColor: '#039be5',
@@ -47,21 +48,15 @@ export const ModalInfosEventCalendar = ({ handleClose, open, eventInfos, isEditC
     ];
 
     useEffect(() => {
-        if (isEditCard) {
-            setTitle(eventInfos?.event?.title);
-            setCardColor({
-                backgroundColor: eventInfos?.event?.backgroundColor,
-                textColor: eventInfos?.event?.textColor,
-            });
-        } else {
-            setTitle('');
-            setCardColor({ backgroundColor: '#039be5', textColor: '#ffffff' });
-        }
-        if (eventInfos) {
-            setStartDate(eventInfos.start);
-            setEndDate(eventInfos.end)
-        }
-
+        setTitle(isEditCard ? eventInfos?.event?.title : '');
+        setCardColor({
+            backgroundColor: isEditCard ? eventInfos?.event?.backgroundColor : '#039be5',
+            textColor: isEditCard ? eventInfos?.event?.textColor : '#ffffff'
+        });
+        setStartDate(eventInfos?.start);
+        setEndDate(eventInfos?.end);
+        setIsAllDay(eventInfos?.event?.allDay ? true : false);  // verificar si es compatible con isAllDay = true 
+                                                                //cuando se abre la modal de crear un nuevo evento
     }, [eventInfos, isEditCard]);
 
     const handleSelectCardColor = (color: ICardColor) => {
@@ -77,9 +72,10 @@ export const ModalInfosEventCalendar = ({ handleClose, open, eventInfos, isEditC
 
             const eventCalendar = await createEventCalendar({
                 eventCalendar: {
-                    title: title === '' ? 'Sem título' : title,
+                    title: title === '' ? 'Sin título' : title,
                     start: eventInfos.startStr,
-                    end: eventInfos.endStr,
+                    end: isAllDay ? eventInfos.endStr : null,
+                    allDay: isAllDay,
                     backgroundColor: cardColor.backgroundColor,
                     textColor: cardColor.textColor,
                 },
@@ -89,12 +85,14 @@ export const ModalInfosEventCalendar = ({ handleClose, open, eventInfos, isEditC
                 id: eventCalendar._id,
                 title: eventCalendar.title,
                 start: eventCalendar.start,
-                end: eventCalendar.endStr,
+                end: eventCalendar.end,
+                allDay: eventCalendar.allDay,
                 backgroundColor: cardColor.backgroundColor,
                 textColor: cardColor.textColor,
             });
+
         } catch (err) {
-            toast.error('Houve um erro ao criar um evento');
+            toast.error('Error al crear el evento');
         } finally {
             setTitle('');
             handleClose();
@@ -106,7 +104,7 @@ export const ModalInfosEventCalendar = ({ handleClose, open, eventInfos, isEditC
             await deleteEventCalendar({ id: eventInfos.event.id });
             eventInfos.event.remove();
         } catch (error) {
-            toast.error('Houve um erro ao deletar o evento');
+            toast.error('Error al eliminar el evento');
         } finally {
             setTitle('');
             handleClose();
@@ -135,8 +133,8 @@ export const ModalInfosEventCalendar = ({ handleClose, open, eventInfos, isEditC
                 currentEvent.setProp('backgroundColor', cardColor.backgroundColor);
                 currentEvent.setProp('textColor', cardColor.textColor);
             }
-
             await updateEventCalendar(eventCalendarUpdated);
+
         } catch (error) {
             toast.error('Houve um erro ao atualizar o evento');
         } finally {
@@ -240,8 +238,24 @@ export const ModalInfosEventCalendar = ({ handleClose, open, eventInfos, isEditC
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary">Close</button>
-                        <button type="button" className="btn btn-primary">Save changes</button>
+                        {isEditCard ? (
+                            <Button
+                                text='Eliminar evento'
+                                className='btn-red'
+                                onClick={handleDeleteEvent}
+                            />
+                        ) : (
+                            <Button
+                                text='Cerrar'
+                                className='btn-grey'
+                                onClick={handleClose}
+                            />
+                        )}
+                        <Button
+                            text={isEditCard ? 'Actualizar evento' : 'Añadir evento'}
+                            className='btn-blue'
+                            onClick={isEditCard ? handleUpdatedEvent : handleAddedEvent}
+                        />
                     </div>
                 </div>
             </div>

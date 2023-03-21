@@ -1,4 +1,5 @@
 import api from './api';
+import * as IEventCalendarApi from '@interfaces/IEventCalendarApi';
 import {
     CREATE_EVENT_CALENDAR,
     DELETE_EVENT_CALENDAR,
@@ -6,17 +7,7 @@ import {
     UPDATE_EVENT_CALENDAR,
 } from './eventCalendarRoutes';
 
-interface ICreateEventCalendar {
-    eventCalendar: {
-        title: string;
-        end: string;
-        start: string;
-        backgroundColor: string;
-        textColor: string;
-    };
-}
-
-export const createEventCalendar = async (data: ICreateEventCalendar) => {
+export const createEventCalendar = async (data: IEventCalendarApi.ICreateEventCalendar) => {
     try {
         const response = await api.post(CREATE_EVENT_CALENDAR, data);
         return response.data;
@@ -34,18 +25,7 @@ export const getAllEventsCalendar = async () => {
     }
 };
 
-interface IUpdateEventCalendar {
-    eventCalendar: {
-        _id: string;
-        title: string;
-        end: string;
-        start: string;
-        backgroundColor: string;
-        textColor: string;
-    };
-}
-
-export const updateEventCalendar = async (data: IUpdateEventCalendar) => {
+export const updateEventCalendar = async (data: IEventCalendarApi.IUpdateEventCalendar) => {
     try {
         const response = await api.put(UPDATE_EVENT_CALENDAR, data);
         return response.data;
@@ -54,11 +34,7 @@ export const updateEventCalendar = async (data: IUpdateEventCalendar) => {
     }
 };
 
-interface IDeleteEventCalendar {
-    id: string;
-}
-
-export const deleteEventCalendar = async ({ id }: IDeleteEventCalendar) => {
+export const deleteEventCalendar = async ({ id }: IEventCalendarApi.IDeleteEventCalendar) => {
     try {
         const response = await api.delete(DELETE_EVENT_CALENDAR(id));
         return response.data;
