@@ -5,7 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 
-import { ModalInfoEvent } from "./modules/modals/ModalInfoEvent";
+import ModalInfoEvent from "./modules/modals/ModalInfoEvent";
 import { useDisclosure } from "@hooks/useDiscloure";
 import { toast } from "react-toastify";
 import { getAllEventsCalendar, updateEventCalendar } from '@services/eventCalendarApi';
@@ -16,23 +16,25 @@ import { IsMobile } from './../../utils/Environment/IsMobile';
 const Calendar = () => {
     const [eventInfos, setEventInfos] = useState();
     const [isEditCard, setIsEditCard] = useState<boolean>(false);
+    const [isAllDay, setIsAllDay] = useState(true);
+    const modalInfosEvent = useDisclosure(false);
 
     const weekends = {
         weekendsVisible: true,
         currentEvents: [],
     };
 
-    const modalInfosEvent = useDisclosure(false);
-
     const handleAddEventSelectAndOpenModal = (selectInfo: any) => {
+        setIsAllDay(true);
         setIsEditCard(false);
         setEventInfos(selectInfo);
         modalInfosEvent.handleOpen();
     };
 
     const handleEditEventSelectAndOpenModal = (clickInfo: any) => {
-        setIsEditCard(true);
+        setIsAllDay(clickInfo?.event?.allDay ? true : false);
         setEventInfos(clickInfo);
+        setIsEditCard(true);
         modalInfosEvent.handleOpen();
     };
 
@@ -103,6 +105,8 @@ const Calendar = () => {
                 handleClose={modalInfosEvent.handleClose}
                 eventInfos={eventInfos}
                 isEditCard={isEditCard}
+                isAllDay={isAllDay}
+                setIsAllDay={setIsAllDay}
             />
         </div>
     );

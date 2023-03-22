@@ -23,16 +23,20 @@ interface IModalInfosEventCalendaryProps {
     handleClose: () => void;
     eventInfos: any;
     isEditCard: boolean;
+    isAllDay: boolean;
+    setIsAllDay: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const ModalInfoEvent = ({ handleClose, open, eventInfos, isEditCard, }: IModalInfosEventCalendaryProps) => {
+const ModalInfoEvent: React.FC<IModalInfosEventCalendaryProps> = (props) => {
+
+    const { handleClose, open, eventInfos, isEditCard, isAllDay, setIsAllDay } = props
     const [title, setTitle] = useState<string>('');
     const [cardColor, setCardColor] = useState<ICardColor>({
         backgroundColor: '#039be5',
         textColor: '#ffffff',
     });
-    const [startDate, setStartDate] = useState(new Date("2014/02/08"));
-    const [endDate, setEndDate] = useState(new Date("2014/02/10"));
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
 
     const ListColorsCard: ICardColor[] = [
         { backgroundColor: '#007bff', textColor: '#ffffff' },
@@ -47,17 +51,25 @@ export const ModalInfoEvent = ({ handleClose, open, eventInfos, isEditCard, }: I
         { backgroundColor: '#6c757d', textColor: '#ffffff' },
     ];
 
+    // startDate y endDate son undefined cuando se hace click en un evento ya creado, 
+    // si se hace click en un nuevo evento no es undefined
     useEffect(() => {
         setTitle(isEditCard ? eventInfos?.event?.title : '');
         setCardColor({
             backgroundColor: isEditCard ? eventInfos?.event?.backgroundColor : '#039be5',
             textColor: isEditCard ? eventInfos?.event?.textColor : '#ffffff'
         });
-        setStartDate(eventInfos?.start);
-        setEndDate(eventInfos?.end);
-        setIsAllDay(eventInfos?.event?.allDay ? true : false);  // verificar si es compatible con isAllDay = true 
-                                                                //cuando se abre la modal de crear un nuevo evento
-    }, [eventInfos, isEditCard]);
+        
+        if(isEditCard) {
+            console.log(eventInfos);
+            
+            setStartDate(eventInfos?.event.start);
+            setEndDate(eventInfos?.event.end);
+        } else {
+            setStartDate(eventInfos?.start);
+            setEndDate(eventInfos?.end);
+        }    
+    }, [eventInfos]);
 
     const handleSelectCardColor = (color: ICardColor) => {
         setCardColor({
@@ -80,6 +92,8 @@ export const ModalInfoEvent = ({ handleClose, open, eventInfos, isEditCard, }: I
                     textColor: cardColor.textColor,
                 },
             });
+            console.log(eventCalendar);
+            
 
             calendarApi.addEvent({
                 id: eventCalendar._id,
@@ -144,7 +158,6 @@ export const ModalInfoEvent = ({ handleClose, open, eventInfos, isEditCard, }: I
     };
 
     // Checkbox
-    const [isAllDay, setIsAllDay] = useState(true);
     const handleCheckboxChange = (event) => {
         setIsAllDay(event);
     };
@@ -154,12 +167,11 @@ export const ModalInfoEvent = ({ handleClose, open, eventInfos, isEditCard, }: I
         return null;
     }
 
-
     return (
         <div
-            className="create-event-modal"
-            onClick={IsMobile() ? undefined : handleClose}
-            onTouchEnd={!IsMobile() ? undefined : handleClose}
+        className="create-event-modal"
+        onClick={IsMobile() ? undefined : handleClose}
+        onTouchEnd={!IsMobile() ? undefined : handleClose}
         >
             <div
                 className="modal-dialog"
@@ -184,25 +196,26 @@ export const ModalInfoEvent = ({ handleClose, open, eventInfos, isEditCard, }: I
                         </div>
                         <div className="form form__datepicker form-control">
                             {isAllDay ? (
+                                // console.log('RENDER',startDate),                                
                                 <>
                                     <DatePicker
-                                        className='not-border'
                                         selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
                                         startDate={startDate}
                                         endDate={endDate}
+                                        className='not-border'
+                                        onChange={(date) => setStartDate(date)}
+                                        selectsStart
                                         dateFormat='dd/MM/yyyy'
                                     />
                                     <span className='separator'>—</span>
                                     <DatePicker
-                                        className='not-border'
                                         selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
                                         startDate={startDate}
                                         endDate={endDate}
                                         minDate={startDate}
+                                        className='not-border'
+                                        onChange={(date) => setEndDate(date)}
+                                        selectsEnd
                                         dateFormat='dd/MM/yyyy'
                                     />
                                 </>
@@ -262,3 +275,5 @@ export const ModalInfoEvent = ({ handleClose, open, eventInfos, isEditCard, }: I
         </div>
     );
 };
+
+export default ModalInfoEvent;
