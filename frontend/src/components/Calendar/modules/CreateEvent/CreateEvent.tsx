@@ -31,16 +31,17 @@ const CreateEvent: React.FC = () => {
             newEvent.dataset.eventObject = JSON.stringify(eventObject);
 
             // Añade el nuevo evento al contenedor
-            externalEvents?.prepend(newEvent);
+            externalEvents?.prepend(newEvent);            
 
             // Hace que el nuevo evento sea arrastrable
             new Draggable(newEvent, {
                 eventData: (eventEl) => {
+                    console.log(eventEl);
+                    
                     return JSON.parse(eventEl.dataset.eventObject || '');
                 },
             });
-
-            // setEventTitle('');
+            setEventTitle('');
             // setSelectedColor('');
         }
     };

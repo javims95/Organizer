@@ -63,7 +63,7 @@ export const navItemsNoLogged = [
         },
         {
             name: "Obtener gratis",
-            link: "/signup",
+            link: "/registro",
             className: 'get-free'
         }
     ]

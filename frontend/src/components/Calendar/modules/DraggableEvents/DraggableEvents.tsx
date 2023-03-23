@@ -8,6 +8,7 @@ const DraggableEvents = () => {
         // Reemplazar por los datos de la BBDD
         const externalEvents = document.querySelectorAll('.external-event');
 
+        // Obtiene todos los elementos arrastrables
         for (let index = 0; index < externalEvents.length; index++) {
             const externalEvent = externalEvents[index] as HTMLElement;
 
@@ -15,11 +16,15 @@ const DraggableEvents = () => {
                 title: externalEvent.innerText.trim(),
                 backgroundColor: '#000000',
             };
+            // console.log(externalEvent);
+            
 
             externalEvent.dataset.eventObject = JSON.stringify(eventObject);
 
             new Draggable(externalEvent, {
                 eventData: (eventEl) => {
+                    // console.log(eventEl.dataset.eventObject);
+                    
                     return JSON.parse(eventEl.dataset.eventObject);
                 },
             });

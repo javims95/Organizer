@@ -1,11 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './Input.scss';
 import { REemail, REnumber, REalpha, REalphanumeric, REdecimal } from '@utils/regex';
 
+type typeInput = 'alpha' | 'alphanumeric' | 'email' | 'number' |'decimal'
 interface InputVM {
     id?: string;
     className?: string;
-    type?: string;
+    type?: typeInput;
     placeholder?: string;
     borderRadius?: boolean;
     value?: string;
@@ -16,23 +17,24 @@ interface InputVM {
     inputRef?: React.RefObject<HTMLInputElement>;
 }
 
+// Eliminar onFocus y onBlur. Hacer la validación en el onBlur
 const Input = React.forwardRef<HTMLInputElement, InputVM>((props, ref) => {
-    // const { id, classname, type, placeholder, borderRadius, value, isValid } = props;
+    const { id, className, type, placeholder, borderRadius, value, onChange, onFocus, onBlur } = props;
 
     const [values, setValues] = useState<InputVM>({
-        id: props.id || '',
-        className: props.className || '',
-        type: props.type || '',
-        placeholder: props.placeholder || '',
-        borderRadius: props.borderRadius || false,
-        value: props.value || '',
+        id: id || '',
+        className: className || '',
+        type: type || 'alpha',
+        placeholder: placeholder || '',
+        borderRadius: borderRadius || false,
+        value: value || '',
         isValid: true,
     });
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
         let isValid = REemail.test(newValue);
-        switch (props.type) {
+        switch (type) {
             case 'alpha':
                 isValid = REalpha.test(newValue);
                 break;
@@ -56,20 +58,20 @@ const Input = React.forwardRef<HTMLInputElement, InputVM>((props, ref) => {
             value: newValue,
             isValid: isValid,
         });
-        if (props.onChange) {
-            props.onChange(event);
+        if (onChange) {
+            onChange(event);
         }
     };
 
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        if (props.onFocus) {
-            props.onFocus(event);
+        if (onFocus) {
+            onFocus(event);
         }
     };
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        if (props.onBlur) {
-            props.onBlur(event);
+        if (onBlur) {
+            onBlur(event);
         }
     };
 

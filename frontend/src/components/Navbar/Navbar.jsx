@@ -4,10 +4,10 @@ import LoggedIn from './LoggedIn/LoggedIn';
 import LoggedOut from './LogeedOut/LogeedOut';
 
 const Navbar = () => {
-    const isLogged = true;
+    const isLogged = false;
 
     useEffect(() => {
-        // Arreglar classicNameResolver, en móviles el menú debe estar collapsado y mas pequeño
+        // Arreglar clases, en móviles el menú debe estar collapsado y mas pequeño
         if (isLogged) {
             document.body.classList.add('nav-expanded-NT');
         } else {

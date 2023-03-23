@@ -59,16 +59,16 @@ const ModalInfoEvent: React.FC<IModalInfosEventCalendaryProps> = (props) => {
             backgroundColor: isEditCard ? eventInfos?.event?.backgroundColor : '#039be5',
             textColor: isEditCard ? eventInfos?.event?.textColor : '#ffffff'
         });
-        
-        if(isEditCard) {
+
+        if (isEditCard) {
             console.log(eventInfos);
-            
+
             setStartDate(eventInfos?.event.start);
             setEndDate(eventInfos?.event.end);
         } else {
             setStartDate(eventInfos?.start);
             setEndDate(eventInfos?.end);
-        }    
+        }
     }, [eventInfos]);
 
     const handleSelectCardColor = (color: ICardColor) => {
@@ -81,7 +81,6 @@ const ModalInfoEvent: React.FC<IModalInfosEventCalendaryProps> = (props) => {
     const handleAddedEvent = async () => {
         try {
             const calendarApi: CalendarApi = eventInfos.view.calendar;
-
             const eventCalendar = await createEventCalendar({
                 eventCalendar: {
                     title: title === '' ? 'Sin título' : title,
@@ -92,9 +91,6 @@ const ModalInfoEvent: React.FC<IModalInfosEventCalendaryProps> = (props) => {
                     textColor: cardColor.textColor,
                 },
             });
-            console.log(eventCalendar);
-            
-
             calendarApi.addEvent({
                 id: eventCalendar._id,
                 title: eventCalendar.title,
@@ -169,9 +165,9 @@ const ModalInfoEvent: React.FC<IModalInfosEventCalendaryProps> = (props) => {
 
     return (
         <div
-        className="create-event-modal"
-        onClick={IsMobile() ? undefined : handleClose}
-        onTouchEnd={!IsMobile() ? undefined : handleClose}
+            className="create-event-modal"
+            onClick={IsMobile() ? undefined : handleClose}
+            onTouchEnd={!IsMobile() ? undefined : handleClose}
         >
             <div
                 className="modal-dialog"
@@ -196,7 +192,6 @@ const ModalInfoEvent: React.FC<IModalInfosEventCalendaryProps> = (props) => {
                         </div>
                         <div className="form form__datepicker form-control">
                             {isAllDay ? (
-                                // console.log('RENDER',startDate),                                
                                 <>
                                     <DatePicker
                                         selected={startDate}
@@ -231,7 +226,9 @@ const ModalInfoEvent: React.FC<IModalInfosEventCalendaryProps> = (props) => {
                                 </>
                             )}
                         </div>
-                        <Checkbox id='allDay' text='Todo el día' checked={isAllDay} onChange={handleCheckboxChange} />
+                        {!isEditCard && (
+                            <Checkbox id='allDay' text='Todo el día' checked={isAllDay} onChange={handleCheckboxChange} />
+                        )}
                         <div className='form'>
                             <span className='label'>Seleccione el color del evento</span>
                             <div className='create-event-colors'>
